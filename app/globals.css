@@ -120,3 +120,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide scrollbars globally */
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body,
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Flex full utility class */
+.flex-full {
+  flex: 0 0 100%;
+}

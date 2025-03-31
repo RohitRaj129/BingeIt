@@ -1,9 +1,24 @@
-import { Button } from "@/components/ui/button";
+import CarouselBannerWrapper from "@/components/CarouselBannerWrapper";
+import MoviesCarousal from "@/components/MoviesCarousal";
+import {
+  getPopularMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+} from "@/lib/getMovies";
 
-export default function Home() {
+export default async function Home() {
+  const upcomingMovies = await getUpcomingMovies();
+  const topRatedMovies = await getTopRatedMovies();
+  const popularMovies = await getPopularMovies();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-poppins)]">
-      {/* <Button variant={"secondary"}>Click me!</Button> */}
-    </div>
+    <main>
+      <CarouselBannerWrapper />
+      <div className="flex flex-col space-y-2 xl:-mt-48">
+        <MoviesCarousal movies={upcomingMovies} title="Upcoming" />
+        <MoviesCarousal movies={topRatedMovies} title="Top Rated Movies" />
+        <MoviesCarousal movies={popularMovies} title="Popular Movies" />
+      </div>
+    </main>
   );
 }

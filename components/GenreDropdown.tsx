@@ -1,5 +1,3 @@
-"use client";
-
 import { Genres } from "@/typings";
 import {
   DropdownMenu,
@@ -30,29 +28,18 @@ async function GenreDropdown() {
   console.log(data.genres);
 
   return (
-    // <DropdownMenu>
-    //   <DropdownMenuTrigger className="text-white flex justify-center items-center">
-    //     Genre
-    //   </DropdownMenuTrigger>
-    //   <DropdownMenuContent>
-    //     {data.genres.map((genre) => (
-    //       <DropdownMenuItem key={genre.id}>
-    //         <Link href={`/genre/${genre.id}?genre=${genre.name}`}>
-    //           {genre.name}
-    //         </Link>
-    //       </DropdownMenuItem>
-    //     ))}
-    //   </DropdownMenuContent>
-    // </DropdownMenu>
     <DropdownMenu>
-      <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+      <DropdownMenuTrigger className="text-white flex justify-center items-center">
+        Genre
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="overflow-y-auto max-h-60  ">
+        {data.genres.map((genre) => (
+          <DropdownMenuItem key={genre.id}>
+            <Link href={`/genre/${genre.id}?genre=${genre.name}`}>
+              {genre.name}
+            </Link>
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
