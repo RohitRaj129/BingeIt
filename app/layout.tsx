@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { StackProvider, StackTheme } from "@stackframe/stack";
+import { stackServerApp } from "../stack";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -32,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} font-sans bg-slate-50 dark:bg-[#0c0e1a]`}
         suppressHydrationWarning
-      >
+      ><StackProvider app={stackServerApp}><StackTheme>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -42,7 +44,7 @@ export default function RootLayout({
           <Header />
           {children}
         </ThemeProvider>
-      </body>
+      </StackTheme></StackProvider></body>
     </html>
   );
 }
