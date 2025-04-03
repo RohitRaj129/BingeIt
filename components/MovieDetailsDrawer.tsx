@@ -13,15 +13,30 @@ import {
 import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import MovieLogo from "@/lib/getMovieLogo";
-import { X, Star, Calendar, Globe, TrendingUp, Users } from "lucide-react";
+import {
+  X,
+  Star,
+  Calendar,
+  Globe,
+  TrendingUp,
+  Users,
+  PlayIcon,
+} from "lucide-react";
+import { getIndianMoviesByGenre } from "@/lib/getMovies";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import MoviesByGenreCarousel from "./MoviesByGenreCarousel";
 
 interface MovieDetailsDrawerProps {
   movie: Movie | null;
   isOpen: boolean;
   onClose: () => void;
 }
+
+const getGenreName = async (genreId: string) => {
+  const genre = await getIndianMoviesByGenre(genreId);
+  return genre;
+};
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -37,160 +52,96 @@ export function MovieDetailsDrawer({
   isOpen,
   onClose,
 }: MovieDetailsDrawerProps) {
-  // Use internal state to handle drawer open state
-  const [open, setOpen] = useState(false);
-
-  // Sync with parent's isOpen prop
-  useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen]);
-
-  // Handle drawer close
-  const handleOpenChange = (open: boolean) => {
-    setOpen(open);
-    if (!open) {
-      onClose();
-    }
-  };
-
   if (!movie) return null;
 
-  // Use backdrop_path or fallback to poster_path
   const imageUrl = getImagePath(
     movie.backdrop_path || movie.poster_path,
     !!movie.backdrop_path
   );
 
   return (
-    <Drawer open={open} onOpenChange={handleOpenChange} direction="bottom">
-      <DrawerContent className="max-h-[90vh] overflow-auto rounded-t-xl border-t-0 bg-black/95 text-white">
-        {/* Pull handle */}
-        <div className="mx-auto h-1.5 w-16 rounded-full bg-gray-400/30 mt-2 mb-1"></div>
-
-        {/* Hero section */}
-        <div className="relative h-[35vh] md:h-[45vh] w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90 z-10" />
-          <Image
-            src={imageUrl}
-            alt={movie.title}
-            fill
-            className="object-cover object-center"
-            priority
-          />
+    <Drawer
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+      direction="bottom"
+    >
+      <DrawerContent className="w-[95%] max-w-4xl mx-auto overflow-auto scrollbar-hide rounded-t-xl bg-[#0c0e1a] text-white pt-0">
+        {/* Close Button */}
+        <div className="absolute right-2 top-2 z-50">
           <Button
-            onClick={() => handleOpenChange(false)}
-            className="absolute top-4 right-4 z-20 rounded-full p-2 bg-black/50 hover:bg-black/70 border border-white/20"
-            size="icon"
             variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-full bg-black/50 hover:bg-black/70"
+            onClick={onClose}
           >
-            <X className="h-5 w-5 text-white" />
+            <X className="h-4 w-4 text-white" />
           </Button>
+        </div>
 
-          {/* Absolutely positioned movie details overlay */}
-          <div className="absolute bottom-0 left-0 w-full p-6 z-20">
-            <DrawerTitle className="sr-only">
-              {movie.title} - Movie Details
-            </DrawerTitle>
+        <div className="flex flex-col md:flex-row h-full">
+          <div className="w-full md:w-1/4 relative h-48 md:h-auto">
+            <Image
+              src={imageUrl}
+              alt={movie.title}
+              height={1920}
+              width={1080}
+              className="object-cover object-center h-full w-full"
+              priority
+            />
+          </div>
+          <div className="w-full md:w-3/4 p-4 flex flex-col justify-between">
+            <div>
+              <DrawerTitle className="text-base sm:text-lg font-bold">
+                {movie.title}
+              </DrawerTitle>
 
-            <div className="mb-3">
-              <MovieLogo title={movie.title} />
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-300 text-xs mt-2">
+                <span>{new Date(movie.release_date).getFullYear()}</span>
+                <span className="px-2 py-1 bg-gray-800 text-white text-xs rounded-md">
+                  {movie.adult ? "18+" : "U/A 13+"}
+                </span>
+                <span>
+                  {movie.original_language === "hi"
+                    ? "Hindi"
+                    : movie.original_language.toUpperCase()}
+                </span>
+              </div>
+
+              <p className="mt-2 text-gray-300 text-xs sm:text-sm line-clamp-3 sm:line-clamp-2">
+                {movie.overview}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mt-4">
+                {movie.genre_ids?.map((genreId) => (
+                  <div
+                    key={genreId}
+                    className="bg-gray-700 text-white text-xs rounded-full px-3 py-1"
+                  >
+                    {/* Replace genreId with actual genre name */}
+                    {genreId}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 mb-3">
-              {movie.vote_average > 0 && (
-                <div className="inline-flex items-center px-2 py-1 bg-red-600/90 text-white text-sm rounded-md backdrop-blur-sm">
-                  <Star className="h-3.5 w-3.5 mr-1 fill-current" />
-                  <span className="font-medium">
-                    {movie.vote_average.toFixed(1)}
-                  </span>
-                </div>
-              )}
-
-              <div className="inline-flex items-center px-2 py-1 bg-gray-800/80 text-white text-sm rounded-md backdrop-blur-sm">
-                <span className="font-medium">
-                  {new Date(movie.release_date).getFullYear()}
-                </span>
-              </div>
-
-              {movie.original_language === "hi" && (
-                <div className="inline-flex items-center px-2 py-1 bg-red-600/90 text-white text-sm rounded-md backdrop-blur-sm">
-                  <span className="font-medium">Hindi</span>
-                </div>
-              )}
-
-              <div className="inline-flex items-center px-2 py-1 bg-gray-800/80 text-white text-sm rounded-md backdrop-blur-sm">
-                <span className="font-medium">
-                  {movie.adult ? "18+" : "U/A 16+"}
-                </span>
-              </div>
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+              <button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-pink-500 px-4 sm:px-5 py-2 text-white text-sm sm:text-base font-semibold rounded-md flex items-center justify-center">
+                <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> Watch
+              </button>
+              <button className="w-full sm:w-auto px-4 py-2 bg-gray-800 text-white rounded-md text-sm sm:text-base">
+                +
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Content section */}
-        <div className="px-6 pb-8">
-          {/* Overview section */}
-          <div className="mt-6 mb-8">
-            <h3 className="text-lg font-semibold mb-3 text-white/90">
-              Overview
-            </h3>
-            <p className="text-white/80 leading-relaxed">
-              {movie.overview || "No overview available."}
-            </p>
-          </div>
+        <div className="p-4">
+          <h2 className="font-bold text-lg p-2">More Like This</h2>
+          <hr className="border-gray-700" />
+        </div>
 
-          {/* Details section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-            <div className="flex flex-col">
-              <div className="flex items-center text-white/60 mb-1.5">
-                <Calendar className="h-4 w-4 mr-1.5" />
-                <span className="text-sm font-medium">Release</span>
-              </div>
-              <p className="text-white font-medium">
-                {formatDate(movie.release_date)}
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center text-white/60 mb-1.5">
-                <Globe className="h-4 w-4 mr-1.5" />
-                <span className="text-sm font-medium">Language</span>
-              </div>
-              <p className="text-white font-medium capitalize">
-                {movie.original_language === "hi"
-                  ? "Hindi"
-                  : movie.original_language}
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center text-white/60 mb-1.5">
-                <TrendingUp className="h-4 w-4 mr-1.5" />
-                <span className="text-sm font-medium">Popularity</span>
-              </div>
-              <p className="text-white font-medium">
-                {movie.popularity.toFixed(0)}
-              </p>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center text-white/60 mb-1.5">
-                <Users className="h-4 w-4 mr-1.5" />
-                <span className="text-sm font-medium">Votes</span>
-              </div>
-              <p className="text-white font-medium">
-                {movie.vote_count.toLocaleString()}
-              </p>
-            </div>
-          </div>
-
-          {/* Action button */}
-          <Button
-            className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-6 rounded-lg transition-all"
-            size="lg"
-          >
-            Watch Now
-          </Button>
+        <div className="mt-8 px-4 pb-12">
+          <MoviesByGenreCarousel movie={movie} />
         </div>
       </DrawerContent>
     </Drawer>

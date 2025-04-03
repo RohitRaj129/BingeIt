@@ -30,13 +30,24 @@ async function GenreDropdown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-white flex justify-center items-center gap-2">
-        <Drama /> Genre
+      <DropdownMenuTrigger className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors">
+        <Drama className="h-4 w-4 sm:h-5 sm:w-5" />
+        <span className="hidden sm:inline">Genre</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="overflow-y-auto max-h-60  ">
+      <DropdownMenuContent className="overflow-y-auto max-h-[60vh] sm:max-h-60 w-48 sm:w-56 bg-gray-900/95 border-gray-800">
+        <DropdownMenuLabel className="text-sm font-semibold text-gray-300">
+          Select Genre
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-gray-800" />
         {data.genres.map((genre) => (
-          <DropdownMenuItem key={genre.id}>
-            <Link href={`/genre/${genre.id}?genre=${genre.name}`}>
+          <DropdownMenuItem
+            key={genre.id}
+            className="text-sm hover:bg-gray-800/50 focus:bg-gray-800/50 cursor-pointer"
+          >
+            <Link
+              href={`/genre/${genre.id}?genre=${genre.name}`}
+              className="w-full py-1.5"
+            >
               {genre.name}
             </Link>
           </DropdownMenuItem>

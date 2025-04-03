@@ -5,6 +5,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProviders";
+import { GlobalDrawerProvider } from "@/contexts/GlobalDrawerContext";
+import GlobalDrawer from "@/components/GlobalDrawer";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -32,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} font-sans bg-slate-50 dark:bg-[#0c0e1a]`}
+        className={`${poppins.variable} font-sans bg-slate-50 dark:bg-[#0c0e1a] min-h-screen`}
         suppressHydrationWarning
       >
         <StackProvider app={stackServerApp}>
@@ -43,8 +45,13 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Header />
-              {children}
+              <GlobalDrawerProvider>
+                <div className="flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <GlobalDrawer />
+                </div>
+              </GlobalDrawerProvider>
             </ThemeProvider>
           </StackTheme>
         </StackProvider>

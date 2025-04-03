@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "./ui/input";
+import { Search } from "lucide-react";
 
 const formSchema = z.object({
   input: z.string().min(2).max(100),
@@ -34,14 +35,21 @@ function SearchBar() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <FormField
           control={form.control}
           name="input"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Search..." {...field} />
+                <div className="relative">
+                  <Input
+                    placeholder="Search..."
+                    {...field}
+                    className="w-[150px] sm:w-[200px] md:w-[250px] pl-8 pr-4 py-1.5 text-sm bg-gray-800/50 border-gray-700 focus:border-gray-600"
+                  />
+                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
               </FormControl>
             </FormItem>
           )}
