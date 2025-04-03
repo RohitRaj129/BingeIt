@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { Drama } from "lucide-react";
 
 async function GenreDropdown() {
   const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
@@ -29,8 +30,8 @@ async function GenreDropdown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-white flex justify-center items-center">
-        Genre
+      <DropdownMenuTrigger className="text-white flex justify-center items-center gap-2">
+        <Drama /> Genre
       </DropdownMenuTrigger>
       <DropdownMenuContent className="overflow-y-auto max-h-60  ">
         {data.genres.map((genre) => (

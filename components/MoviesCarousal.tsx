@@ -1,5 +1,4 @@
 import { Movie } from "@/typings";
-import { title } from "process";
 import MovieCard from "./MovieCard";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +7,22 @@ type Props = {
   movies: Movie[];
   isVertical?: boolean;
 };
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function isMovieReleased(releaseDate: string): boolean {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
+  const release = new Date(releaseDate);
+  return release < today;
+}
 
 function MoviesCarousal({ title, movies, isVertical }: Props) {
   return (
@@ -20,24 +35,40 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
         )}
       >
         {isVertical
-          ? movies?.map((movie) => (
-              <div
-                key={movie.id}
-                className={cn(
-                  isVertical &&
-                    "flex flex-col space-y-5 mb-5 items-center lg:flex-row space-x-5"
-                )}
-              >
-                <MovieCard movie={movie} />
-                <div className="max-w-2xl">
-                  <p className="font-bold">
-                    {movie.title}({movie.release_date.split("-")[0]})
-                  </p>
-                  <hr className="mb-3" />
-                  <p className="">{movie.overview}</p>
+          ? movies?.map((movie) => {
+              const isReleased = isMovieReleased(movie.release_date);
+              return (
+                <div
+                  key={movie.id}
+                  className={cn(
+                    isVertical &&
+                      "flex flex-col space-y-5 mb-5 items-center lg:flex-row space-x-5"
+                  )}
+                >
+                  <MovieCard movie={movie} />
+                  <div className="max-w-2xl">
+                    <div className="flex items-center space-x-4 mb-2">
+                      <p className="font-bold text-xl">{movie.title}</p>
+                      {isReleased && (
+                        <span className="bg-red-600 px-2 py-1 rounded text-white text-sm">
+                          {movie.vote_average.toFixed(1)}
+                        </span>
+                      )}
+                      {movie.original_language === "hi" && (
+                        <span className="bg-red-600 px-2 py-1 rounded text-white text-sm">
+                          Hindi
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-400 mb-3">
+                      Release Date: {formatDate(movie.release_date)}
+                    </p>
+                    <hr className="mb-3" />
+                    <p className="text-gray-300">{movie.overview}</p>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           : movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
       </div>
     </div>

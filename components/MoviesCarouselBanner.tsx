@@ -27,7 +27,7 @@ function isMovieReleased(releaseDate: string): boolean {
   return release < today;
 }
 
-function CarouselBanner({ movies }: { movies: Movie[] }) {
+function MoviesCarouselBanner({ movies }: { movies: Movie[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 100 }, [
     Autoplay(),
   ]);
@@ -47,13 +47,13 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
   }
 
   const handleMovieClick = useCallback((movie: Movie) => {
-    console.log("Opening drawer for banner movie:", movie.title);
+    console.log("Opening drawer for Indian movie:", movie.title);
     setSelectedMovie(movie);
     setIsDrawerOpen(true);
   }, []);
 
   const handleCloseDrawer = useCallback(() => {
-    console.log("Closing drawer for banner");
+    console.log("Closing drawer for Indian movie");
     setIsDrawerOpen(false);
   }, []);
 
@@ -118,4 +118,4 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
   );
 }
 
-export default CarouselBanner;
+export default MoviesCarouselBanner;

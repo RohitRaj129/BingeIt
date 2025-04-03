@@ -1,4 +1,4 @@
-import { getDiscoverMovies } from "@/lib/getMovies";
+import { getIndianMovies } from "@/lib/getMovies";
 import CarouselBanner from "./CarouselBanner";
 
 type Props = {
@@ -7,9 +7,19 @@ type Props = {
 };
 
 async function CarouselBannerWrapper({ id, keywords }: Props) {
-  const movies = await getDiscoverMovies(id, keywords);
+  try {
+    const movies = await getIndianMovies();
 
-  return <CarouselBanner movies={movies} />;
+    if (!movies || movies.length === 0) {
+      console.error("No Indian movies found");
+      return null;
+    }
+
+    return <CarouselBanner movies={movies} />;
+  } catch (error) {
+    console.error("Error fetching Indian movies for banner:", error);
+    return null;
+  }
 }
 
 export default CarouselBannerWrapper;
