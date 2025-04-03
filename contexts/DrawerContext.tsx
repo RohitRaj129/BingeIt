@@ -5,7 +5,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 type DrawerContextType = {
   openDrawerId: string | null;
   openDrawer: (id: string) => void;
-  closeDrawer: (id: string) => void;
+  closeDrawer: () => void;
   isDrawerOpen: (id: string) => boolean;
 };
 
@@ -18,10 +18,8 @@ export function DrawerProvider({ children }: { children: ReactNode }) {
     setOpenDrawerId(id);
   };
 
-  const closeDrawer = (id: string) => {
-    if (openDrawerId === id) {
-      setOpenDrawerId(null);
-    }
+  const closeDrawer = () => {
+    setOpenDrawerId(null);
   };
 
   const isDrawerOpen = (id: string) => {
