@@ -140,7 +140,7 @@ export function MovieDetailsDrawer({
           <hr className="border-gray-700" />
         </div>
 
-        <div className="mt-8 px-4 pb-12">
+        <div className="mt-1 pb-12">
           <MoviesByGenreCarousel movie={movie} />
         </div>
       </DrawerContent>

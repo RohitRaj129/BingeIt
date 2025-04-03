@@ -33,9 +33,6 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
 
   return (
     <div className="z-50">
-      <h2 className="text-lg sm:text-xl font-bold px-4 sm:px-10 py-2">
-        {title}
-      </h2>
       <div
         className={cn(
           "flex space-x-4 overflow-scroll px-2 sm:px-5 lg:px-10 py-3 sm:py-5 scrollbar-hide",
