@@ -101,7 +101,7 @@ export function MovieDetailsDrawer({
             <X className="h-4 w-4 text-white" />
           </Button>
         </div>
-        <div className="mt-1 pb-12 w-full min-h-auto overflow-auto whitespace-nowrap scrollbar-hide max-w-4xl mx-auto rounded-t-xl bg-[#0c0e1a] text-white pt-0 sm:min-h-[60vh]">
+        <div className="pb-12 w-full min-h-auto overflow-auto whitespace-nowrap scrollbar-hide max-w-4xl mx-auto rounded-t-xl bg-[#0c0e1a] text-white pt-0 sm:min-h-[60vh]">
           <div className="flex flex-col md:flex-row h-full">
             <div className="w-full md:w-1/4 relative h-48 md:h-auto">
               <Image

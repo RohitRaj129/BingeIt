@@ -4,7 +4,14 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import GenreDropdown from "./GenreDropdown";
 import { UserButton } from "@stackframe/stack";
-import { Grid2x2Plus, Popcorn, Ticket, TvMinimal, Menu } from "lucide-react";
+import {
+  Grid2x2Plus,
+  Popcorn,
+  Ticket,
+  TvMinimal,
+  Menu,
+  Search,
+} from "lucide-react";
 
 function Header() {
   return (
@@ -23,25 +30,25 @@ function Header() {
       <div className="hidden md:flex items-center space-x-4">
         <Link
           href="/movies"
-          className="text-white hover:text-gray-300 transition-colors flex items-center gap-1"
+          className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
         >
           <Popcorn /> Movies
         </Link>
         <Link
           href="/webseries"
-          className="text-white hover:text-gray-300 transition-colors flex items-center gap-1"
+          className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
         >
           <TvMinimal /> TV Shows
         </Link>
         <Link
           href="/ticket"
-          className="text-white hover:text-gray-300 transition-colors flex items-center gap-1"
+          className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
         >
           <Ticket /> Tickets
         </Link>
         <Link
           href="/categories"
-          className="text-white hover:text-gray-300 transition-colors flex items-center gap-1"
+          className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
         >
           <Grid2x2Plus /> Categories
         </Link>
@@ -55,11 +62,11 @@ function Header() {
         <Link href="/movies" className="flex flex-col items-center">
           <Popcorn size={24} /> <span className="text-xs">Movies</span>
         </Link>
-        <Link href="/webseries" className="flex flex-col items-center">
-          <TvMinimal size={24} /> <span className="text-xs">TV Shows</span>
-        </Link>
         <Link href="/ticket" className="flex flex-col items-center">
           <Ticket size={24} /> <span className="text-xs">Tickets</span>
+        </Link>
+        <Link href="/search" className="flex flex-col items-center">
+          <Search size={24} /> <span className="text-xs">Search</span>
         </Link>
         <Link href="/categories" className="flex flex-col items-center">
           <Grid2x2Plus size={24} /> <span className="text-xs">Categories</span>

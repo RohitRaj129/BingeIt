@@ -34,7 +34,7 @@ async function GenreDropdown() {
         <Drama className="h-4 w-4 sm:h-5 sm:w-5" />
         <span className="hidden sm:inline">Genre</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="overflow-y-auto max-h-[60vh] sm:max-h-60 w-48 sm:w-56 bg-gray-900/95 border-gray-800">
+      <DropdownMenuContent className="overflow-y-auto scrollbar-hide max-h-[60vh] sm:max-h-60 w-48 sm:w-56 bg-gray-900/95 border-gray-800">
         <DropdownMenuLabel className="text-sm font-semibold text-gray-300">
           Select Genre
         </DropdownMenuLabel>
