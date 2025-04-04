@@ -10,9 +10,7 @@ type Props = {
 };
 
 export default function MoviesByGenreCarousel({ movie }: Props) {
-  const [genreMovies, setGenreMovies] = useState<{ [key: string]: Movie[] }>(
-    {}
-  );
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,18 +22,20 @@ export default function MoviesByGenreCarousel({ movie }: Props) {
         // Fetch movies for each genre using the server action
         const moviesPromises = genres.map(async (genreId) => {
           const movies = await fetchMoviesByGenreAction(genreId.toString());
-          return { genreId, movies };
+          return movies;
         });
 
         const results = await Promise.all(moviesPromises);
 
-        // Create an object with genre IDs as keys and movies as values
-        const moviesByGenre = results.reduce((acc, { genreId, movies }) => {
-          acc[genreId] = movies.filter((m) => m.id !== movie.id); // Exclude the current movie
-          return acc;
-        }, {} as { [key: string]: Movie[] });
+        // Combine all movies into a single array and remove duplicates
+        const allMovies = results.flat();
+        const uniqueMovies = Array.from(
+          new Map(allMovies.map((movie) => [movie.id, movie])).values()
+        )
+          .filter((m) => m.id !== movie.id) // Exclude the current movie
+          .slice(0, 8); // Limit to 8 movies
 
-        setGenreMovies(moviesByGenre);
+        setSimilarMovies(uniqueMovies);
       } catch (error) {
         console.error("Error fetching movies by genre:", error);
       } finally {
@@ -52,15 +52,11 @@ export default function MoviesByGenreCarousel({ movie }: Props) {
 
   return (
     <div className="space-y-4">
-      {Object.entries(genreMovies).map(
-        ([genreId, movies]) =>
-          movies.length > 0 && (
-            <MoviesCarousal
-              key={genreId}
-              title={`More ${getGenreName(genreId)} Movies`}
-              movies={movies}
-            />
-          )
+      {similarMovies.length > 0 && (
+        <MoviesCarousal
+          title="Similar Movies You Might Like"
+          movies={similarMovies}
+        />
       )}
     </div>
   );
