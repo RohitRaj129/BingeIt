@@ -8,7 +8,8 @@ type Props = {
   };
 };
 
-async function SearchPage({ params: { term } }: Props) {
+async function SearchPage({ params }: Props) {
+  const term = params.term;
   if (!term) notFound();
 
   const termToUse = decodeURI(term);
