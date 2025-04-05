@@ -1,6 +1,6 @@
 "use server";
 
-import { getIndianMoviesByGenre } from "./getMovies";
+import { getIndianMoviesByGenre, getPopularMovies } from "./getMovies";
 import { Movie } from "@/typings";
 
 export async function fetchMoviesByGenreAction(
@@ -11,6 +11,16 @@ export async function fetchMoviesByGenreAction(
     return movies;
   } catch (error) {
     console.error("Error fetching movies by genre:", error);
+    return [];
+  }
+}
+
+export async function fetchPopularMoviesAction(): Promise<Movie[]> {
+  try {
+    const movies = await getPopularMovies("IN");
+    return movies;
+  } catch (error) {
+    console.error("Error fetching popular movies:", error);
     return [];
   }
 }

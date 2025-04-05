@@ -11,6 +11,7 @@ import {
   TvMinimal,
   Menu,
   Search,
+  House,
 } from "lucide-react";
 
 function Header() {
@@ -38,7 +39,7 @@ function Header() {
           href="/webseries"
           className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
         >
-          <TvMinimal /> TV Shows
+          <TvMinimal /> TV
         </Link>
         <Link
           href="/ticket"
@@ -59,8 +60,8 @@ function Header() {
 
       {/* Mobile Navigation Bar */}
       <nav className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm text-white flex justify-around py-2 z-[100] md:hidden  border-t border-gray-800">
-        <Link href="/movies" className="flex flex-col items-center">
-          <Popcorn size={24} /> <span className="text-xs">Movies</span>
+        <Link href="/" className="flex flex-col items-center">
+          <House size={24} /> <span className="text-xs">Home</span>
         </Link>
         <Link href="/ticket" className="flex flex-col items-center">
           <Ticket size={24} /> <span className="text-xs">Tickets</span>

@@ -17,7 +17,13 @@ export default function MoviesByGenreCarousel({ movie }: Props) {
     async function fetchMoviesByGenre() {
       try {
         // Get the first 3 genres of the movie
-        const genres = movie.genre_ids.slice(0, 3);
+        const genres = movie.genre_ids?.slice(0, 3) || [];
+
+        // If no genres, return early
+        if (genres.length === 0) {
+          setLoading(false);
+          return;
+        }
 
         // Fetch movies for each genre using the server action
         const moviesPromises = genres.map(async (genreId) => {

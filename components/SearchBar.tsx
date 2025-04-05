@@ -35,20 +35,20 @@ function SearchBar() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative w-full">
         <FormField
           control={form.control}
           name="input"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormControl>
-                <div className="relative">
+                <div className="relative w-full">
                   <Input
-                    placeholder="Search..."
+                    placeholder="Search for movies..."
                     {...field}
-                    className="w-[150px] sm:w-[200px] md:w-[250px] pl-8 pr-4 py-1.5 text-sm bg-gray-800/50 border-gray-700 focus:border-gray-600"
+                    className="w-full h-12 sm:h-14 md:h-16 pl-12 pr-6 text-base sm:text-lg md:text-xl bg-gray-800/50 border-gray-700 focus:border-gray-600 rounded-lg"
                   />
-                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 sm:h-6 sm:w-6 text-gray-400" />
                 </div>
               </FormControl>
             </FormItem>
