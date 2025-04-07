@@ -2,8 +2,8 @@
 
 import getImagePath from "@/lib/getImagePath";
 import { Movie } from "@/typings";
-import Image from "next/image";
 import { useState } from "react";
+import ResponsiveImage from "./ui/ResponsiveImage";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -30,8 +30,6 @@ function MovieCard({ movie, onSelect }: MovieCardProps) {
   const isReleased = movie.release_date
     ? isMovieReleased(movie.release_date)
     : false;
-  const [imageError, setImageError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleClick = () => {
     console.log("Selected movie:", movie.title);
@@ -50,31 +48,17 @@ function MovieCard({ movie, onSelect }: MovieCardProps) {
       tabIndex={0}
       aria-label={`View details for ${movie.title}`}
     >
-      {/* Loading state */}
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-800 animate-pulse rounded-lg z-0" />
-      )}
-
       {/* Image container */}
       <div className="relative w-full h-full rounded-lg overflow-hidden">
-        <Image
-          className={`object-cover transition-opacity duration-300 ${
-            isLoading ? "opacity-0" : "opacity-100"
-          }`}
-          src={imageError ? "/not_found.png" : imagePath}
-          alt={movie.title}
+        <ResponsiveImage
+          src={imagePath}
+          alt={movie.title || "Movie poster"}
           fill
           sizes="300px"
-          priority={false}
-          onError={() => {
-            console.error("Image failed to load:", imagePath);
-            setImageError(true);
-            setIsLoading(false);
-          }}
-          onLoad={() => {
-            setIsLoading(false);
-          }}
+          fallbackSrc="/not_found.png"
+          showLoadingPlaceholder={true}
           quality={75}
+          className="object-cover"
         />
 
         {/* Gradient overlay */}

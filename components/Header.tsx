@@ -1,8 +1,6 @@
-// "use client";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import SearchBar from "./SearchBar";
-import GenreDropdown from "./GenreDropdown";
 import { UserButton } from "@stackframe/stack";
 import {
   Grid2x2Plus,
@@ -13,8 +11,14 @@ import {
   Search,
   House,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 function Header() {
+  const pathname = usePathname();
+
+  const hiddenPaths = ["/handler"];
+
+  if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
   return (
     <header className="fixed w-full z-100 top-0 flex items-center justify-between p-4 bg-gradient-to-t from-gray-200/0 via-gray-900/25 to-gray-900">
       <Link href="/" className="flex-shrink-0">
@@ -53,8 +57,12 @@ function Header() {
         >
           <Grid2x2Plus /> Categories
         </Link>
-        <GenreDropdown />
-        <SearchBar />
+        <Link
+          href="/search"
+          className="text-white flex justify-center items-center gap-1 sm:gap-2 text-sm sm:text-base px-2 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-gray-800/50 transition-colors"
+        >
+          <Search /> Search
+        </Link>
         <UserButton />
       </div>
 
