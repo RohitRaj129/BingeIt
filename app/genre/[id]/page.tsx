@@ -10,7 +10,14 @@ type Props = {
   };
 };
 
-async function GenrePage({ params: { id }, searchParams: { genre } }: Props) {
+async function GenrePage({ params, searchParams }: Props) {
+  // Await the dynamic params and searchParams
+  const resolvedParams = await Promise.resolve(params);
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+
+  const id = resolvedParams.id;
+  const genre = resolvedSearchParams.genre || "Selected";
+
   const movies = await getDiscoverMovies(id);
 
   return (
@@ -19,9 +26,7 @@ async function GenrePage({ params: { id }, searchParams: { genre } }: Props) {
       <div className="fixed top-0 left-0 right-0 z-10 bg-[#0c0e1a] px-6 pt-6">
         <div className="max-w-3xl mx-auto mt-9 mb-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center">
-            Results for{" "}
-            <span className="text-primary-500">{genre ?? "Selected"}</span>{" "}
-            Genre
+            Results for <span className="text-primary-500">{genre}</span> Genre
           </h1>
         </div>
         <hr className="border-t border-gray-700" />
