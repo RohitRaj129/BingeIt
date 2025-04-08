@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Movie } from "@/typings";
 import MovieCard from "./MovieCard";
 import { cn } from "@/lib/utils";
 import { useGlobalDrawer } from "@/contexts/GlobalDrawerContext";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
   title: string;
@@ -28,14 +30,92 @@ function isMovieReleased(releaseDate: string): boolean {
 }
 
 function MoviesCarousal({ title, movies, isVertical }: Props) {
-  // Use the global drawer context instead of local state
   const { openDrawer } = useGlobalDrawer();
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+  const [itemWidth, setItemWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Scroll buttons
+  const handleScroll = (direction: "left" | "right") => {
+    const carousel = carouselRef.current;
+    if (!carousel || itemWidth === 0) return;
+
+    const scrollAmount = isMobile ? itemWidth : itemWidth * 4;
+    carousel.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const updateButtonVisibility = () => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const { scrollLeft, scrollWidth, clientWidth } = carousel;
+    setShowLeft(scrollLeft > 0);
+    setShowRight(scrollLeft + clientWidth < scrollWidth - 10);
+  };
+
+  useEffect(() => {
+    if (isVertical) return;
+
+    const carousel = carouselRef.current;
+    const item = itemRef.current;
+
+    // detect mobile width
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // Tailwind 'sm' breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    if (item) {
+      setItemWidth(item.offsetWidth + 16); // include spacing
+    }
+
+    if (carousel) {
+      carousel.addEventListener("scroll", updateButtonVisibility);
+      updateButtonVisibility();
+    }
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      if (carousel) {
+        carousel.removeEventListener("scroll", updateButtonVisibility);
+      }
+    };
+  }, [isVertical, movies]);
 
   return (
-    <div className="z-50">
+    <div className="relative z-50">
+      {!isVertical && (
+        <>
+          {showLeft && (
+            <button
+              onClick={() => handleScroll("left")}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          )}
+          {showRight && (
+            <button
+              onClick={() => handleScroll("right")}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-50 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
+            >
+              <ChevronRight size={20} />
+            </button>
+          )}
+        </>
+      )}
+
       <div
+        ref={carouselRef}
         className={cn(
-          "flex space-x-4 overflow-scroll px-2 sm:px-5 lg:px-10 py-3 sm:py-5 scrollbar-hide",
+          "flex space-x-4 overflow-x-auto px-2 sm:px-5 lg:px-10 py-3 sm:py-5 scrollbar-hide scroll-smooth",
           isVertical && "flex-col space-x-0 space-y-8 sm:space-y-12"
         )}
       >
@@ -45,10 +125,7 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
               return (
                 <div
                   key={movie.id}
-                  className={cn(
-                    isVertical &&
-                      "flex flex-col space-y-4 sm:space-y-5 mb-4 sm:mb-5 items-center lg:flex-row lg:space-x-5"
-                  )}
+                  className="flex flex-col space-y-4 sm:space-y-5 mb-4 sm:mb-5 items-center lg:flex-row lg:space-x-5"
                 >
                   <MovieCard movie={movie} onSelect={openDrawer} />
                   <div className="max-w-2xl px-4 sm:px-0">
@@ -78,12 +155,12 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
                 </div>
               );
             })
-          : movies?.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} onSelect={openDrawer} />
+          : movies?.map((movie, idx) => (
+              <div key={movie.id} ref={idx === 0 ? itemRef : null}>
+                <MovieCard movie={movie} onSelect={openDrawer} />
+              </div>
             ))}
       </div>
-
-      {/* No need for drawer here anymore, it's handled by GlobalDrawer */}
     </div>
   );
 }

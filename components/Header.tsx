@@ -7,7 +7,6 @@ import {
   Popcorn,
   Ticket,
   TvMinimal,
-  Menu,
   Search,
   House,
 } from "lucide-react";
