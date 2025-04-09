@@ -21,5 +21,4 @@ async function CarouselBannerWrapper({ id, keywords }: Props) {
     return null;
   }
 }
-
 export default CarouselBannerWrapper;

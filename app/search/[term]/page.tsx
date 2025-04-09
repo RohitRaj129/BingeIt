@@ -21,7 +21,7 @@ async function SearchPage({ params }: Props) {
   return (
     <main className="relative h-screen pt-6 p-6 mt-[100px]">
       {/* Fixed Search Bar */}
-      <div className="fixed top-0 left-0 right-0 z-10 bg-[#0c0e1a] px-6 pt-6">
+      <div className="fixed top-0 left-0 right-0 z-51 bg-[#0c0e1a] px-6 pt-6">
         <div className="max-w-3xl mx-auto mb-4 mt-9">
           <SearchBar />
         </div>

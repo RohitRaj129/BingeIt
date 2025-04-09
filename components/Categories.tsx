@@ -1,7 +1,7 @@
 "use client";
 import { Genres } from "@/typings";
 import Link from "next/link";
-import { Film } from "lucide-react";
+import { Film, Popcorn, TvMinimal } from "lucide-react";
 import { getGenreIconComponent } from "@/lib/getGenreIcon";
 
 type Props = {
@@ -19,6 +19,32 @@ function Categories({ genres }: Props) {
       </div>
       <div className="mt-10 overflow-auto scrollbar-hide h-[calc(100vh-100px)] px-6">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+          <div className="lg:hidden">
+            <Link
+              href="/movies"
+              className="group flex flex-col items-center justify-center bg-[#0c0e1a] hover:bg-[#2a2a2a] p-4 rounded-lg text-white transition duration-300 w-full"
+            >
+              <div className="mb-2 transform transition-transform duration-300 group-hover:scale-110">
+                <Popcorn className="h-6 w-6" />
+              </div>
+              <span className="text-sm text-center transform transition-transform duration-300 group-hover:scale-110">
+                Movies
+              </span>
+            </Link>
+          </div>
+          <div className="lg:hidden">
+            <Link
+              href="/tv"
+              className="group flex flex-col items-center justify-center bg-[#0c0e1a] hover:bg-[#2a2a2a] p-4 rounded-lg text-white transition duration-300 w-full"
+            >
+              <div className="mb-2 transform transition-transform duration-300 group-hover:scale-110">
+                <TvMinimal className="h-6 w-6" />
+              </div>
+              <span className="text-sm text-center transform transition-transform duration-300 group-hover:scale-110">
+                TV Shows
+              </span>
+            </Link>
+          </div>
           {genres?.map((genre) => {
             const Icon = getGenreIconComponent(genre.name);
             return (
