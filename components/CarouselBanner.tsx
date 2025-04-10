@@ -67,7 +67,7 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
             >
               <Image
                 src={getImagePath(
-                  movie.backdrop_path || movie.poster_path,
+                  movie.backdrop_path || movie.poster_path || "",
                   !!movie.backdrop_path
                 )}
                 alt={movie.title}

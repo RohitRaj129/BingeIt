@@ -78,7 +78,7 @@ export function MovieDetailsDrawer({
 
   const imageUrl = useMemo(() => {
     return getImagePath(
-      movie.backdrop_path || movie.poster_path,
+      movie.backdrop_path || movie.poster_path || "",
       !!movie.backdrop_path
     );
   }, [movie.backdrop_path, movie.poster_path]);
