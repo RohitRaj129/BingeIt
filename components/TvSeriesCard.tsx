@@ -1,7 +1,7 @@
 "use client";
 
 import getImagePath from "@/lib/getImagePath";
-import { Movie } from "@/typings";
+import { TvSeries } from "@/typings";
 import ResponsiveImage from "./ui/ResponsiveImage";
 
 function formatDate(dateString: string) {
@@ -20,24 +20,24 @@ function isMovieReleased(releaseDate: string): boolean {
   return release < today;
 }
 
-interface MovieCardProps {
-  movie: Movie;
-  onSelect: (movie: Movie) => void;
+interface TvSeriesCardProps {
+  tvSeries: TvSeries;
+  onSelect: (tvSeries: TvSeries) => void;
 }
 
-function MovieCard({ movie, onSelect }: MovieCardProps) {
-  const isReleased = movie.release_date
-    ? isMovieReleased(movie.release_date)
+function TvSeriesCard({ tvSeries, onSelect }: TvSeriesCardProps) {
+  const isReleased = tvSeries.first_air_date
+    ? isMovieReleased(tvSeries.first_air_date)
     : false;
 
   const handleClick = () => {
-    console.log("Selected movie:", movie.title);
-    onSelect(movie);
+    console.log("Selected tvSeries:", tvSeries.name);
+    onSelect(tvSeries);
   };
 
   // Get the image path with HTTPS
   const imagePath = getImagePath(
-    movie.backdrop_path || movie.poster_path || ""
+    tvSeries.backdrop_path || tvSeries.poster_path || ""
   );
 
   return (
@@ -47,13 +47,13 @@ function MovieCard({ movie, onSelect }: MovieCardProps) {
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      aria-label={`View details for ${movie.title}`}
+      aria-label={`View details for ${tvSeries.name}`}
     >
       {/* Image container */}
       <div className="relative w-full h-full rounded-lg overflow-hidden">
         <ResponsiveImage
           src={imagePath}
-          alt={movie.title || "Movie poster"}
+          alt={tvSeries.name || "TvSeries poster"}
           fill
           sizes="300px"
           fallbackSrc="/not_found.png"
@@ -68,18 +68,18 @@ function MovieCard({ movie, onSelect }: MovieCardProps) {
         {/* Content overlay */}
         <div className="absolute z-20 bottom-3 left-3 right-3">
           <p className="font-bold text-base text-white mb-1 line-clamp-1">
-            {movie.title}
+            {tvSeries.name}
           </p>
           <div className="flex items-center space-x-2 text-xs flex-wrap gap-1">
             {isReleased && (
               <span className="bg-red-600 px-1.5 py-0.5 rounded text-white">
-                {movie.vote_average.toFixed(1)}
+                {tvSeries.vote_average.toFixed(1)}
               </span>
             )}
             <span className="text-gray-200">
-              {movie.release_date?.split("-")[0]}
+              {tvSeries.first_air_date?.split("-")[0]}
             </span>
-            {movie.original_language === "hi" && (
+            {tvSeries.original_language === "hi" && (
               <span className="bg-red-600 px-1.5 py-0.5 rounded text-white">
                 Hindi
               </span>
@@ -91,4 +91,4 @@ function MovieCard({ movie, onSelect }: MovieCardProps) {
   );
 }
 
-export default MovieCard;
+export default TvSeriesCard;

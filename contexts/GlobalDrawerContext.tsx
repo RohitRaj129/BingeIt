@@ -1,12 +1,16 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Movie } from "@/typings";
+import { Movie, TvSeries } from "@/typings";
+
+type DrawerItem =
+  | { type: "movie"; item: Movie }
+  | { type: "tv"; item: TvSeries };
 
 type GlobalDrawerContextType = {
-  activeMovie: Movie | null;
+  activeItem: DrawerItem | null;
   isDrawerOpen: boolean;
-  openDrawer: (movie: Movie) => void;
+  openDrawer: (item: DrawerItem) => void;
   closeDrawer: () => void;
 };
 
@@ -15,30 +19,25 @@ const GlobalDrawerContext = createContext<GlobalDrawerContextType | undefined>(
 );
 
 export function GlobalDrawerProvider({ children }: { children: ReactNode }) {
-  const [activeMovie, setActiveMovie] = useState<Movie | null>(null);
-  const isDrawerOpen = activeMovie !== null;
+  const [activeItem, setActiveItem] = useState<DrawerItem | null>(null);
+  const isDrawerOpen = activeItem !== null;
 
-  const openDrawer = (movie: Movie) => {
-    console.log("Opening global drawer for:", movie.title);
-    setActiveMovie(movie);
+  const openDrawer = (item: DrawerItem) => {
+    console.log("Opening global drawer for:", item);
+    setActiveItem(item);
   };
 
   const closeDrawer = () => {
     console.log("Closing global drawer");
-    setActiveMovie(null);
+    setActiveItem(null);
   };
 
   return (
     <GlobalDrawerContext.Provider
-      value={{ activeMovie, isDrawerOpen, openDrawer, closeDrawer }}
+      value={{ activeItem, isDrawerOpen, openDrawer, closeDrawer }}
     >
       {children}
-      {/* Render the drawer at the app level, outside of any carousel */}
-      {activeMovie && (
-        <div id="global-drawer-container">
-          {/* MovieDetailsDrawer will be imported and used in the layout */}
-        </div>
-      )}
+      {/* Global drawer logic is handled separately */}
     </GlobalDrawerContext.Provider>
   );
 }

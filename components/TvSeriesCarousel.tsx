@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Movie } from "@/typings";
+import { Movie, TvSeries } from "@/typings";
 import MovieCard from "./MovieCard";
 import { cn } from "@/lib/utils";
 import { useGlobalDrawer } from "@/contexts/GlobalDrawerContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import TvSeriesCard from "./TvSeriesCard";
 
 type Props = {
   title: string;
-  movies: Movie[];
+  tvSeries: TvSeries[];
   isVertical?: boolean;
 };
 
@@ -22,14 +23,14 @@ function formatDate(dateString: string) {
   });
 }
 
-function isMovieReleased(releaseDate: string): boolean {
+function isTvSeriesReleased(releaseDate: string): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const release = new Date(releaseDate);
   return release < today;
 }
 
-function MoviesCarousal({ title, movies, isVertical }: Props) {
+function TvSeriesCarousel({ title, tvSeries, isVertical }: Props) {
   const { openDrawer } = useGlobalDrawer();
   const carouselRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
         carousel.removeEventListener("scroll", updateButtonVisibility);
       }
     };
-  }, [isVertical, movies]);
+  }, [isVertical, tvSeries]);
 
   return (
     <div className="relative z-50">
@@ -120,49 +121,49 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
         )}
       >
         {isVertical
-          ? movies?.map((movie) => {
-              const isReleased = isMovieReleased(movie.release_date);
+          ? tvSeries?.map((tvSeries) => {
+              const isReleased = isTvSeriesReleased(tvSeries.first_air_date);
               return (
                 <div
-                  key={movie.id}
+                  key={tvSeries.id}
                   className="flex flex-col space-y-4 sm:space-y-5 mb-4 sm:mb-5 items-center lg:flex-row lg:space-x-5"
                 >
-                  <MovieCard
-                    movie={movie}
-                    onSelect={() => openDrawer({ type: "movie", item: movie })}
+                  <TvSeriesCard
+                    tvSeries={tvSeries}
+                    onSelect={() => openDrawer({ type: "tv", item: tvSeries })}
                   />
                   <div className="max-w-2xl px-4 sm:px-0">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-2">
                       <p className="font-bold text-lg sm:text-xl">
-                        {movie.title}
+                        {tvSeries.name}
                       </p>
                       {isReleased && (
                         <span className="bg-red-600 px-2 py-1 rounded text-white text-xs sm:text-sm">
-                          {movie.vote_average.toFixed(1)}
+                          {tvSeries.vote_average.toFixed(1)}
                         </span>
                       )}
-                      {movie.original_language === "hi" && (
+                      {tvSeries.original_language === "hi" && (
                         <span className="bg-red-600 px-2 py-1 rounded text-white text-xs sm:text-sm">
                           Hindi
                         </span>
                       )}
                     </div>
                     <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">
-                      Release Date: {formatDate(movie.release_date)}
+                      Release Date: {formatDate(tvSeries.first_air_date)}
                     </p>
                     <hr className="mb-2 sm:mb-3" />
                     <p className="text-sm sm:text-base text-gray-300 line-clamp-3 sm:line-clamp-none">
-                      {movie.overview}
+                      {tvSeries.overview}
                     </p>
                   </div>
                 </div>
               );
             })
-          : movies?.map((movie, idx) => (
-              <div key={movie.id} ref={idx === 0 ? itemRef : null}>
-                <MovieCard
-                  movie={movie}
-                  onSelect={() => openDrawer({ type: "movie", item: movie })}
+          : tvSeries?.map((tvSeries, idx) => (
+              <div key={tvSeries.id} ref={idx === 0 ? itemRef : null}>
+                <TvSeriesCard
+                  tvSeries={tvSeries}
+                  onSelect={() => openDrawer({ type: "tv", item: tvSeries })}
                 />
               </div>
             ))}
@@ -171,4 +172,4 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
   );
 }
 
-export default MoviesCarousal;
+export default TvSeriesCarousel;

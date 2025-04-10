@@ -36,6 +36,8 @@ async function fetchFromTMDB(url: URL, cacheTime?: number, region?: string) {
 // Popular TV Series
 export async function getPopularTvSeries(region?: string): Promise<TvSeries[]> {
   const url = new URL("https://api.themoviedb.org/3/tv/popular");
+  url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url, undefined, region);
   return data.results;
 }
@@ -45,6 +47,8 @@ export async function getTopRatedTvSeries(
   region?: string
 ): Promise<TvSeries[]> {
   const url = new URL("https://api.themoviedb.org/3/tv/top_rated");
+  url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url, undefined, region);
   return data.results;
 }
@@ -54,6 +58,8 @@ export async function getTrendingTvSeries(
   timeWindow: "day" | "week" = "day"
 ): Promise<TvSeries[]> {
   const url = new URL(`https://api.themoviedb.org/3/trending/tv/${timeWindow}`);
+  url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url);
   return data.results;
 }
@@ -63,6 +69,8 @@ export async function getAiringTodayTvSeries(
   region?: string
 ): Promise<TvSeries[]> {
   const url = new URL("https://api.themoviedb.org/3/tv/airing_today");
+  url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url, undefined, region);
   return data.results;
 }
@@ -72,6 +80,8 @@ export async function getCurrentlyOnAirTvSeries(
   region?: string
 ): Promise<TvSeries[]> {
   const url = new URL("https://api.themoviedb.org/3/tv/on_the_air");
+  url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url, undefined, region);
   return data.results;
 }
@@ -105,7 +115,7 @@ export async function getTvSeriesByGenre(
   genreId: string,
   region?: string
 ): Promise<TvSeries[]> {
-  const url = new URL("https://api.themoviedb.org/3/discover/tv");
+  const url = new URL("https://api.themoviedb.org/3/genre/tv/list?language=en");
   url.searchParams.set("with_genres", genreId);
   const data = await fetchFromTMDB(url, undefined, region);
   return data.results;

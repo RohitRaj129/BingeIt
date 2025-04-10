@@ -2,17 +2,30 @@
 
 import { useGlobalDrawer } from "@/contexts/GlobalDrawerContext";
 import MovieDetailsDrawer from "./MovieDetailsDrawer";
+import TvSeriesDetailsDrawer from "./TvSeriesDetailsDrawer";
 
 export default function GlobalDrawer() {
-  const { activeMovie, isDrawerOpen, closeDrawer } = useGlobalDrawer();
+  const { activeItem, isDrawerOpen, closeDrawer } = useGlobalDrawer();
 
-  if (!activeMovie) return null;
+  if (!activeItem) return null;
 
-  return (
-    <MovieDetailsDrawer
-      movie={activeMovie}
-      isOpen={isDrawerOpen}
-      onClose={closeDrawer}
-    />
-  );
+  if (activeItem.type === "movie") {
+    return (
+      <MovieDetailsDrawer
+        movie={activeItem.item}
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+      />
+    );
+  } else if (activeItem.type === "tv") {
+    return (
+      <TvSeriesDetailsDrawer
+        tvSeries={activeItem.item}
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+      />
+    );
+  }
+
+  return null;
 }

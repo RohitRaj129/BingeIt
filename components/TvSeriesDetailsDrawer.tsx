@@ -1,45 +1,42 @@
 "use client";
 
-import { Movie } from "@/typings";
+import { TvSeries } from "@/typings";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import { X, PlayIcon } from "lucide-react";
-import { getIndianMoviesByGenre } from "@/lib/getMovies";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
-import MoviesByGenreCarousel from "./MoviesByGenreCarousel";
+import TvSeriesByGenreCarousel from "./TvSeriesByGenreCarousel";
+import { getTvSeriesByGenre } from "@/lib/getTvSeries";
 
-const GENRE_MAP: { [id: number]: string } = {
-  28: "Action",
-  12: "Adventure",
+const TV_GENRE_MAP: { [id: number]: string } = {
+  10759: "Action & Adventure",
   16: "Animation",
   35: "Comedy",
   80: "Crime",
   99: "Documentary",
   18: "Drama",
   10751: "Family",
-  14: "Fantasy",
-  36: "History",
-  27: "Horror",
-  10402: "Music",
+  10762: "Kids",
   9648: "Mystery",
-  10749: "Romance",
-  878: "Science Fiction",
-  10770: "TV Movie",
-  53: "Thriller",
-  10752: "War",
+  10763: "News",
+  10764: "Reality",
+  10765: "Sci-Fi & Fantasy",
+  10766: "Soap",
+  10767: "Talk",
+  10768: "War & Politics",
   37: "Western",
 };
 
-interface MovieDetailsDrawerProps {
-  movie: Movie | null;
+interface TvSeriesDetailsDrawerProps {
+  tvSeries: TvSeries | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const getGenreName = async (genreId: string) => {
-  const genre = await getIndianMoviesByGenre(genreId);
+  const genre = await getTvSeriesByGenre(genreId);
   return genre;
 };
 
@@ -52,19 +49,19 @@ function formatDate(dateString: string) {
   });
 }
 
-export function MovieDetailsDrawer({
-  movie,
+export function TvSeriesDetailsDrawer({
+  tvSeries,
   isOpen,
   onClose,
-}: MovieDetailsDrawerProps) {
-  if (!movie) return null;
+}: TvSeriesDetailsDrawerProps) {
+  if (!tvSeries) return null;
 
   const imageUrl = useMemo(() => {
     return getImagePath(
-      movie.backdrop_path || movie.poster_path || "",
-      !!movie.backdrop_path
+      tvSeries.backdrop_path || tvSeries.poster_path || "",
+      !!tvSeries.backdrop_path
     );
-  }, [movie.backdrop_path, movie.poster_path]);
+  }, [tvSeries.backdrop_path, tvSeries.poster_path]);
 
   return (
     <Drawer
@@ -89,7 +86,7 @@ export function MovieDetailsDrawer({
             <div className="w-full md:w-1/4 relative h-48 md:h-auto">
               <Image
                 src={imageUrl}
-                alt={movie.title}
+                alt={tvSeries.name}
                 height={1920}
                 width={1080}
                 className="object-cover object-center h-full w-full"
@@ -99,32 +96,32 @@ export function MovieDetailsDrawer({
             <div className="w-full md:w-3/4 p-4 flex flex-col justify-between">
               <div>
                 <DrawerTitle className="text-base sm:text-lg font-bold">
-                  {movie.title}
+                  {tvSeries.name}
                 </DrawerTitle>
 
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-300 text-xs mt-2">
-                  <span>{new Date(movie.release_date).getFullYear()}</span>
+                  <span>{new Date(tvSeries.first_air_date).getFullYear()}</span>
                   <span className="px-2 py-1 bg-gray-800 text-white text-xs rounded-md">
-                    {movie.adult ? "18+" : "U/A 13+"}
+                    {tvSeries.adult ? "18+" : "U/A 13+"}
                   </span>
                   <span>
-                    {movie.original_language === "hi"
+                    {tvSeries.original_language === "hi"
                       ? "Hindi"
-                      : movie.original_language.toUpperCase()}
+                      : tvSeries.original_language.toUpperCase()}
                   </span>
                 </div>
 
                 <p className="mt-2 text-gray-300 text-xs sm:text-sm line-clamp-3 sm:line-clamp-2">
-                  {movie.overview}
+                  {tvSeries.overview}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {movie.genre_ids?.map((genreId) => (
+                  {tvSeries.genre_ids?.map((genreId) => (
                     <div
                       key={genreId}
                       className="bg-gray-700 text-white text-xs rounded-full px-3 py-1"
                     >
-                      {GENRE_MAP[genreId] || "Unknown"}
+                      {TV_GENRE_MAP[genreId] || "Unknown"}
                     </div>
                   ))}
                 </div>
@@ -152,7 +149,7 @@ export function MovieDetailsDrawer({
           </div>
           <div className="mt-1 pb-12 w-full min-h-auto overflow-x-auto whitespace-nowrap scrollbar-hide">
             <div className="h-auto md:h-64 w-full flex min-w-0">
-              <MoviesByGenreCarousel movie={movie} />
+              <TvSeriesByGenreCarousel tvSeries={tvSeries} />
             </div>
           </div>
         </div>
@@ -161,4 +158,4 @@ export function MovieDetailsDrawer({
   );
 }
 
-export default MovieDetailsDrawer;
+export default TvSeriesDetailsDrawer;

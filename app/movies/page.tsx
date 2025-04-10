@@ -1,4 +1,3 @@
-import MoviesCarouselBannerWrapper from "@/components/MoviesCarouselBannerWrapper";
 import MoviesCarousal from "@/components/MoviesCarousal";
 import {
   getPopularIndianMovies,
@@ -6,7 +5,7 @@ import {
   getUpcomingIndianMovies,
   getIndianMoviesByGenre,
 } from "@/lib/getMovies";
-import CarouselBannerWrapper from "@/components/CarouselBannerWrapper";
+import MoviesCarouselBannerWrapper from "@/components/MoviesCarouselBannerWrapper";
 
 export default async function MoviesPage() {
   try {
@@ -28,7 +27,7 @@ export default async function MoviesPage() {
 
     return (
       <main>
-        <CarouselBannerWrapper />
+        <MoviesCarouselBannerWrapper />
         <div className="flex flex-col space-y-2 -mt-5 sm:-mt-12">
           {/* Upcoming Movies */}
           <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10 z-10">
