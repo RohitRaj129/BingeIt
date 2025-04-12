@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProviders";
 import { GlobalDrawerProvider } from "@/contexts/GlobalDrawerContext";
 import GlobalDrawer from "@/components/GlobalDrawer";
+import FooterSection from "@/components/Footer";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -50,6 +51,7 @@ export default function RootLayout({
                   <Header />
                   <main className="flex-1">{children}</main>
                   <GlobalDrawer />
+                  <FooterSection />
                 </div>
               </GlobalDrawerProvider>
             </ThemeProvider>

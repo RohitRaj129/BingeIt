@@ -30,7 +30,7 @@ export default function SearchPage() {
       <div className="flex flex-col items-center space-y-12 sm:space-y-16 md:space-y-20">
         {/* Search Bar */}
         <div className="w-full max-w-3xl sm:max-w-4xl md:max-w-5xl px-4 sm:px-6 md:px-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-10">
+          <h1 className="text-2xl sm:text-3xl mt-3 md:mt-5 md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-10">
             Search Movies
           </h1>
           <SearchBar />
