@@ -1,7 +1,9 @@
 import MoviesCarousal from "@/components/MoviesCarousal";
-import { getSearchedMovies, getTopRatedMovies } from "@/lib/getMovies";
+import { getPopularMovies, getSearchedMovies } from "@/lib/getMovies";
+import { searchTvSeries, getPopularTvSeries } from "@/lib/getTvSeries";
 import { notFound } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
+import TvSeriesCarousal from "@/components/TvSeriesCarousel";
 
 type Props = {
   params: {
@@ -16,7 +18,9 @@ async function SearchPage({ params }: Props) {
 
   const termToUse = decodeURI(term);
   const movies = await getSearchedMovies(termToUse);
-  const popularMovies = await getTopRatedMovies();
+  const tvSeries = await searchTvSeries(termToUse);
+  const popularMovies = await getPopularMovies();
+  const popularTvSeries = await getPopularTvSeries();
 
   return (
     <main className="relative h-screen pt-6 p-6 mt-[100px]">
@@ -39,6 +43,11 @@ async function SearchPage({ params }: Props) {
 
         {/* Search Results */}
         <MoviesCarousal title="Search Results" movies={movies} isVertical />
+        <TvSeriesCarousal
+          title="Search Results"
+          tvSeries={tvSeries}
+          isVertical
+        />
 
         {/* You May Also Like */}
         <MoviesCarousal title="You May Also Like" movies={popularMovies} />

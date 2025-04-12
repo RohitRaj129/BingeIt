@@ -13,7 +13,7 @@ function formatDate(dateString: string) {
   });
 }
 
-function isMovieReleased(releaseDate: string): boolean {
+function isTvSeriesReleased(releaseDate: string): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const release = new Date(releaseDate);
@@ -27,7 +27,7 @@ interface TvSeriesCardProps {
 
 function TvSeriesCard({ tvSeries, onSelect }: TvSeriesCardProps) {
   const isReleased = tvSeries.first_air_date
-    ? isMovieReleased(tvSeries.first_air_date)
+    ? isTvSeriesReleased(tvSeries.first_air_date)
     : false;
 
   const handleClick = () => {

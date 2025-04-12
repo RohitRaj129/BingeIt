@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Movie, TvSeries } from "@/typings";
-import MovieCard from "./MovieCard";
+import { TvSeries } from "@/typings";
+import TvSeriesCard from "./TvSeriesCard";
 import { cn } from "@/lib/utils";
 import { useGlobalDrawer } from "@/contexts/GlobalDrawerContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import TvSeriesCard from "./TvSeriesCard";
 
 type Props = {
   title: string;
@@ -30,7 +29,7 @@ function isTvSeriesReleased(releaseDate: string): boolean {
   return release < today;
 }
 
-function TvSeriesCarousel({ title, tvSeries, isVertical }: Props) {
+function TvSeriesCarousal({ title, tvSeries, isVertical }: Props) {
   const { openDrawer } = useGlobalDrawer();
   const carouselRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -130,7 +129,9 @@ function TvSeriesCarousel({ title, tvSeries, isVertical }: Props) {
                 >
                   <TvSeriesCard
                     tvSeries={tvSeries}
-                    onSelect={() => openDrawer({ type: "tv", item: tvSeries })}
+                    onSelect={(tvSeries) =>
+                      openDrawer({ type: "tv", item: tvSeries })
+                    }
                   />
                   <div className="max-w-2xl px-4 sm:px-0">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-2">
@@ -163,7 +164,9 @@ function TvSeriesCarousel({ title, tvSeries, isVertical }: Props) {
               <div key={tvSeries.id} ref={idx === 0 ? itemRef : null}>
                 <TvSeriesCard
                   tvSeries={tvSeries}
-                  onSelect={() => openDrawer({ type: "tv", item: tvSeries })}
+                  onSelect={(tvSeries) =>
+                    openDrawer({ type: "tv", item: tvSeries })
+                  }
                 />
               </div>
             ))}
@@ -172,4 +175,4 @@ function TvSeriesCarousel({ title, tvSeries, isVertical }: Props) {
   );
 }
 
-export default TvSeriesCarousel;
+export default TvSeriesCarousal;

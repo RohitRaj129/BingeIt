@@ -1,33 +1,27 @@
 import TvSeriesCarousel from "@/components/TvSeriesCarousel";
 import {
-  getPopularIndianMovies,
-  getTopRatedIndianMovies,
-  getUpcomingIndianMovies,
-  getIndianMoviesByGenre,
-} from "@/lib/getMovies";
-import {
-  getPopularTvSeries,
+  getIndianPopularTvSeries,
   getAiringTodayTvSeries,
-  getTopRatedTvSeries,
-  getTvSeriesByGenre,
+  getIndianTopRatedTvSeries,
+  getIndianTvSeriesByGenre,
 } from "@/lib/getTvSeries";
 import TvSeriesCarouselBannerWrapper from "@/components/TvSeriesCarouselBannerWrapper";
 export default async function TvSeriesPage() {
   try {
     const [
       airingTodayTvSeries,
-      topRatedTvSeries,
-      popularTvSeries,
-      actionTvSeries,
-      comedyTvSeries,
-      dramaTvSeries,
+      indianTopRatedTvSeries,
+      indianPopularTvSeries,
+      indianActionTvSeries,
+      indianComedyTvSeries,
+      indianDramaTvSeries,
     ] = await Promise.all([
       getAiringTodayTvSeries(),
-      getTopRatedTvSeries(),
-      getPopularTvSeries(),
-      getTvSeriesByGenre("28"), // Action genre
-      getTvSeriesByGenre("35"), // Comedy genre
-      getTvSeriesByGenre("18"), // Drama genre
+      getIndianTopRatedTvSeries(),
+      getIndianPopularTvSeries(),
+      getIndianTvSeriesByGenre("10759"), // Action genre
+      getIndianTvSeriesByGenre("35"), // Comedy genre
+      getIndianTvSeriesByGenre("18"), // Drama genre
     ]);
 
     return (
@@ -49,9 +43,9 @@ export default async function TvSeriesPage() {
           <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
             Top Rated Tv Series
           </h2>
-          {topRatedTvSeries?.length > 0 && (
+          {indianTopRatedTvSeries?.length > 0 && (
             <TvSeriesCarousel
-              tvSeries={topRatedTvSeries}
+              tvSeries={indianTopRatedTvSeries}
               title="Top Rated Indian Tv Series"
             />
           )}
@@ -60,9 +54,9 @@ export default async function TvSeriesPage() {
           <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
             Trending Tv Series
           </h2>
-          {popularTvSeries?.length > 0 && (
+          {indianPopularTvSeries?.length > 0 && (
             <TvSeriesCarousel
-              tvSeries={popularTvSeries}
+              tvSeries={indianPopularTvSeries}
               title="Trending Indian Tv Series"
             />
           )}
@@ -77,9 +71,9 @@ export default async function TvSeriesPage() {
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
                 Action Tv Series
               </h2>
-              {actionTvSeries?.length > 0 && (
+              {indianActionTvSeries?.length > 0 && (
                 <TvSeriesCarousel
-                  tvSeries={actionTvSeries}
+                  tvSeries={indianActionTvSeries}
                   title="Indian Action Tv Series"
                 />
               )}
@@ -88,9 +82,9 @@ export default async function TvSeriesPage() {
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
                 Comedy Tv Series
               </h2>
-              {comedyTvSeries?.length > 0 && (
+              {indianComedyTvSeries?.length > 0 && (
                 <TvSeriesCarousel
-                  tvSeries={comedyTvSeries}
+                  tvSeries={indianComedyTvSeries}
                   title="Indian Comedy Tv Series"
                 />
               )}
@@ -99,9 +93,9 @@ export default async function TvSeriesPage() {
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
                 Drama Tv Series
               </h2>
-              {dramaTvSeries?.length > 0 && (
+              {indianDramaTvSeries?.length > 0 && (
                 <TvSeriesCarousel
-                  tvSeries={dramaTvSeries}
+                  tvSeries={indianDramaTvSeries}
                   title="Indian Drama Tv Series"
                 />
               )}

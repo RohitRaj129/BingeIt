@@ -8,7 +8,6 @@ import { X, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 import TvSeriesByGenreCarousel from "./TvSeriesByGenreCarousel";
-import { getTvSeriesByGenre } from "@/lib/getTvSeries";
 
 const TV_GENRE_MAP: { [id: number]: string } = {
   10759: "Action & Adventure",
@@ -35,19 +34,19 @@ interface TvSeriesDetailsDrawerProps {
   onClose: () => void;
 }
 
-const getGenreName = async (genreId: string) => {
-  const genre = await getTvSeriesByGenre(genreId);
-  return genre;
-};
+// const getGenreName = async (genreId: string) => {
+//   const genre = await getTvSeriesByGenre(genreId);
+//   return genre;
+// };
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+// function formatDate(dateString: string) {
+//   const date = new Date(dateString);
+//   return date.toLocaleDateString("en-US", {
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
+// }
 
 export function TvSeriesDetailsDrawer({
   tvSeries,
