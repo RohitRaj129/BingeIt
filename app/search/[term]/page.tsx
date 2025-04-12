@@ -17,6 +17,7 @@ async function SearchPage({ params }: Props) {
   if (!term) notFound();
 
   const termToUse = decodeURI(term);
+  const termToShow = decodeURIComponent(term);
   const movies = await getSearchedMovies(termToUse);
   const tvSeries = await searchTvSeries(termToUse);
   const popularMovies = await getPopularMovies();
@@ -37,7 +38,7 @@ async function SearchPage({ params }: Props) {
         {/* Results Header */}
         <div className="pt-2">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Results for <span className="text-primary-500">{termToUse}</span>
+            Results for <span className="text-primary-500">{termToShow}</span>
           </h1>
         </div>
 
