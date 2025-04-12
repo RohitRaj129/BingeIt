@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 function Header() {
   const pathname = usePathname();
 
-  const hiddenPaths = ["/handler"];
+  const hiddenPaths = ["/handler", "/about", "/pricing"];
 
   if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
   return (

@@ -4,6 +4,7 @@ import {
   getTopRatedIndianMovies,
   getUpcomingIndianMovies,
   getIndianMoviesByGenre,
+  getMoviesByGenre,
 } from "@/lib/getMovies";
 import MoviesCarouselBannerWrapper from "@/components/MoviesCarouselBannerWrapper";
 
@@ -16,6 +17,7 @@ export default async function MoviesPage() {
       actionMovies,
       comedyMovies,
       dramaMovies,
+      animationMovies,
     ] = await Promise.all([
       getUpcomingIndianMovies(),
       getTopRatedIndianMovies(),
@@ -23,6 +25,7 @@ export default async function MoviesPage() {
       getIndianMoviesByGenre("28"), // Action genre
       getIndianMoviesByGenre("35"), // Comedy genre
       getIndianMoviesByGenre("18"), // Drama genre
+      getMoviesByGenre("16"), // Animation genre
     ]);
 
     return (
@@ -57,6 +60,14 @@ export default async function MoviesPage() {
               movies={popularMovies}
               title="Trending Indian Movies"
             />
+          )}
+
+          {/* Animation Movies*/}
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
+            Animation Movies
+          </h2>
+          {animationMovies?.length > 0 && (
+            <MoviesCarousal movies={animationMovies} title="Animation Movies" />
           )}
 
           {/* Genre Section */}

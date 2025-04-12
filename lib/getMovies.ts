@@ -81,6 +81,13 @@ export async function getIndianMoviesByGenre(genreId: string) {
   const data = await fetchFromTMDB(url);
   return data.results;
 }
+export async function getMoviesByGenre(genreId: string) {
+  const url = new URL("https://api.themoviedb.org/3/discover/movie");
+  url.searchParams.set("with_genres", genreId);
+
+  const data = await fetchFromTMDB(url);
+  return data.results;
+}
 
 export async function getUpcomingMovies(region?: string) {
   const url = new URL("https://api.themoviedb.org/3/movie/upcoming");

@@ -4,6 +4,7 @@ import {
   getAiringTodayTvSeries,
   getIndianTopRatedTvSeries,
   getIndianTvSeriesByGenre,
+  getTvSeriesByGenre,
 } from "@/lib/getTvSeries";
 import TvSeriesCarouselBannerWrapper from "@/components/TvSeriesCarouselBannerWrapper";
 export default async function TvSeriesPage() {
@@ -15,6 +16,7 @@ export default async function TvSeriesPage() {
       indianActionTvSeries,
       indianComedyTvSeries,
       indianDramaTvSeries,
+      animationSeries,
     ] = await Promise.all([
       getAiringTodayTvSeries(),
       getIndianTopRatedTvSeries(),
@@ -22,6 +24,7 @@ export default async function TvSeriesPage() {
       getIndianTvSeriesByGenre("10759"), // Action genre
       getIndianTvSeriesByGenre("35"), // Comedy genre
       getIndianTvSeriesByGenre("18"), // Drama genre
+      getTvSeriesByGenre("16"), // Animation genre
     ]);
 
     return (
@@ -39,7 +42,7 @@ export default async function TvSeriesPage() {
             />
           )}
 
-          {/* Top Rated Movies */}
+          {/* Top Rated Series */}
           <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
             Top Rated Tv Series
           </h2>
@@ -50,7 +53,18 @@ export default async function TvSeriesPage() {
             />
           )}
 
-          {/* Trending Movies */}
+          {/* Animation Series */}
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
+            Trending Tv Series
+          </h2>
+          {animationSeries?.length > 0 && (
+            <TvSeriesCarousel
+              tvSeries={animationSeries}
+              title="Animation Series"
+            />
+          )}
+
+          {/* Trending Series */}
           <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10">
             Trending Tv Series
           </h2>
