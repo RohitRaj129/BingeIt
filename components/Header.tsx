@@ -22,7 +22,7 @@ function Header() {
     <header className="fixed w-full z-100 top-0 flex items-center justify-between p-4 bg-gradient-to-t from-gray-200/0 via-gray-900/25 to-gray-900">
       <Link href="/" className="flex-shrink-0">
         <Image
-          src="/logo.png"
+          src="/logo.svg"
           alt="BingeIt"
           width={120}
           height={120}

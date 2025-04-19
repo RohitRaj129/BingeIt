@@ -47,13 +47,11 @@ function MoviesCarouselBanner({ movies }: { movies: Movie[] }) {
   }
 
   const handleMovieClick = useCallback((movie: Movie) => {
-    console.log("Opening drawer for Indian movie:", movie.title);
     setSelectedMovie(movie);
     setIsDrawerOpen(true);
   }, []);
 
   const handleCloseDrawer = useCallback(() => {
-    console.log("Closing drawer for Indian movie");
     setIsDrawerOpen(false);
   }, []);
 
@@ -80,7 +78,7 @@ function MoviesCarouselBanner({ movies }: { movies: Movie[] }) {
                 width={1920}
                 height={1080}
                 priority
-                className="brightness-[0.7]"
+                className="brightness-[0.7]w-full h-auto object-cover"
               />
               <div className="hidden md:inline absolute mt-0 top-0 pt-40 xl:pt-52 left-0 lg:mt-0 bg-transparent z-20 h-full w-full bg-gradient-to-r from-gray-900/90 to-transparent p-10 space-y-5 text-white">
                 <div className="max-w-xl">
@@ -103,10 +101,33 @@ function MoviesCarouselBanner({ movies }: { movies: Movie[] }) {
                   )}
                 </div>
               </div>
+              {/* Mobile overlay */}
+              <div className="md:hidden absolute bottom-0 left-0 w-full z-30 px-3 py-3 text-white bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="mb-8">
+                  <MovieLogo
+                    title={movie.title}
+                    className="mb-1 max-w-[80%] h-auto"
+                  />
+                  <p className="text-[10px] leading-tight line-clamp-2 mb-1">
+                    {movie.overview || "No overview available."}
+                  </p>
+                  <div className="flex flex-wrap gap-1 text-[9px] font-medium leading-none">
+                    <span className="bg-red-600 px-1.5 py-[1px] rounded">
+                      {movie.vote_average.toFixed(1)}/10
+                    </span>
+                    <span>{formatDate(movie.release_date)}</span>
+                    {movie.original_language === "hi" && (
+                      <span className="bg-red-600 px-1.5 py-[1px] rounded">
+                        Hindi
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#0C0E1A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#0C0E1A] pointer-events-none" />
       </div>
 
       <MovieDetailsDrawer

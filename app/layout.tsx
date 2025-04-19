@@ -20,10 +20,12 @@ export const metadata: Metadata = {
   description: "Your Favorite Streaming and Booking Platform",
   icons: {
     icon: [
-      { url: "/bingeit_logo.png" },
-      { url: "/bingeit_logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/bingeit_logo.svg" },
+      { url: "/bingeit_logo.svg", sizes: "32x32", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/bingeit_logo.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/bingeit_logo.svg", sizes: "180x180", type: "image/svg+xml" },
+    ],
   },
 };
 

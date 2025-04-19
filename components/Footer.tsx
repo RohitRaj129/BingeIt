@@ -6,40 +6,29 @@ import { usePathname } from "next/navigation";
 
 const links = [
   {
-    group: "Company",
+    group: "",
     items: [
       {
         title: "About Us",
         href: "/about",
       },
+    ],
+  },
+  {
+    group: "",
+    items: [
       {
         title: "Pricing",
         href: "/pricing",
       },
-      {
-        title: "Help",
-        href: "/help",
-      },
     ],
   },
   {
-    group: "Legal",
+    group: "",
     items: [
       {
-        title: "Licence",
-        href: "#",
-      },
-      {
-        title: "Privacy",
-        href: "#",
-      },
-      {
-        title: "Cookies",
-        href: "#",
-      },
-      {
-        title: "Security",
-        href: "#",
+        title: "Help",
+        href: "/help",
       },
     ],
   },
@@ -59,7 +48,7 @@ export default function FooterSection() {
 
   if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
   return (
-    <footer className="border-b mb-15 bg-white pt-20 dark:bg-transparent">
+    <footer className="border-b mb-15 md:mb-0 bg-white pt-20 dark:bg-transparent">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 md:grid-cols-5">
           <div className="md:col-span-2">
@@ -93,7 +82,10 @@ export default function FooterSection() {
         </div>
         <div className="mt-12 flex flex-wrap items-end justify-between gap-6 border-t py-6">
           <span className="text-muted-foreground order-last block text-center text-sm md:order-first">
-            © {new Date().getFullYear()} Tailus UI, All rights reserved
+            © {new Date().getFullYear()} BingeIt, All rights reserved
+          </span>
+          <span className="text-muted-foreground order-last block text-center text-sm md:order-first">
+            Made with ❤️ by Rohit Raj
           </span>
           <div className="order-first flex flex-wrap justify-center gap-6 text-sm md:order-last">
             <Link
