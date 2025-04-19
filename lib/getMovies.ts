@@ -38,6 +38,7 @@ async function fetchFromTMDB(url: URL, cacheTime?: number, region?: string) {
 export async function getIndianMovies() {
   const url = new URL("https://api.themoviedb.org/3/discover/movie");
   url.searchParams.set("with_original_language", "hi"); // Hindi language
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
   url.searchParams.set("sort_by", "popularity.desc");
 
@@ -48,6 +49,7 @@ export async function getIndianMovies() {
 export async function getUpcomingIndianMovies() {
   const url = new URL("https://api.themoviedb.org/3/movie/upcoming");
   url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
 
   const data = await fetchFromTMDB(url);
@@ -57,6 +59,7 @@ export async function getUpcomingIndianMovies() {
 export async function getTopRatedIndianMovies() {
   const url = new URL("https://api.themoviedb.org/3/movie/top_rated");
   url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
 
   const data = await fetchFromTMDB(url);
@@ -66,6 +69,7 @@ export async function getTopRatedIndianMovies() {
 export async function getPopularIndianMovies() {
   const url = new URL("https://api.themoviedb.org/3/movie/popular");
   url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
 
   const data = await fetchFromTMDB(url);
@@ -76,6 +80,7 @@ export async function getIndianMoviesByGenre(genreId: string) {
   const url = new URL("https://api.themoviedb.org/3/discover/movie");
   url.searchParams.set("with_genres", genreId);
   url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
 
   const data = await fetchFromTMDB(url);
@@ -125,6 +130,7 @@ export async function getSearchedMovies(term: string) {
   const url = new URL("https://api.themoviedb.org/3/search/movie");
   url.searchParams.set("query", term);
   url.searchParams.set("with_original_language", "hi");
+  url.searchParams.set("language", "hi-IN");
   url.searchParams.set("region", "IN");
   const data = await fetchFromTMDB(url);
   return data.results;

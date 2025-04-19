@@ -8,6 +8,8 @@ import { X, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 import TvSeriesByGenreCarousel from "./TvSeriesByGenreCarousel";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const TV_GENRE_MAP: { [id: number]: string } = {
   10759: "Action & Adventure",
@@ -61,6 +63,12 @@ export function TvSeriesDetailsDrawer({
       !!tvSeries.backdrop_path
     );
   }, [tvSeries.backdrop_path, tvSeries.poster_path]);
+
+  const pathname = usePathname();
+
+  const hiddenPaths = ["/handler", "/about", "/pricing", "/watch"];
+
+  if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
 
   return (
     <Drawer
@@ -128,12 +136,17 @@ export function TvSeriesDetailsDrawer({
 
               <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
                 <div className="group w-full sm:w-auto">
-                  <button className="w-full sm:w-auto bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 hover:from-purple-800 hover:via-indigo-700 hover:to-blue-600 px-4 sm:px-5 py-2 text-white text-sm sm:text-base font-semibold rounded-md flex items-center justify-center transition-all duration-500 bg-[length:200%_200%] hover:bg-[position:100%_0%]">
-                    <span className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
-                      <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Watch
-                    </span>
-                  </button>
+                  <Link
+                    href={`/watch/${tvSeries.id}?type=tv`}
+                    className="group w-full sm:w-auto"
+                  >
+                    <button className="w-full sm:w-auto bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 hover:from-purple-800 hover:via-indigo-700 hover:to-blue-600 px-4 sm:px-5 py-2 text-white text-sm sm:text-base font-semibold rounded-md flex items-center justify-center transition-all duration-500 bg-[length:200%_200%] hover:bg-[position:100%_0%]">
+                      <span className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105 cursor-pointer">
+                        <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                        Watch
+                      </span>
+                    </button>
+                  </Link>
                 </div>
                 <button className="w-full sm:w-auto px-4 py-2 bg-gray-800 text-white rounded-md text-sm sm:text-base">
                   +
