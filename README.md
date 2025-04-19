@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 BingeIt - Movie & TV Show Explorer
 
-## Getting Started
+**BingeIt** is a movie and TV series discovery platform built with **Next.js**, **Tailwind CSS**, and powered by the **TMDB API**.  
+It allows users to explore trending content, view trailers, and browse by genres — all in a sleek, responsive interface.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🔍 Search for movies and TV series
+- 🎞️ Watch trailers directly (supports both movies & TV)
+- 🧲 Browse by genre
+- 🇮🇳 Hindi movie support with native titles
+- 📱 Responsive design
+- ⚡ Fast, server-rendered pages using App Router (Next.js 13+)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **Video Player:** ReactPlayer / YouTube embed
+- **API:** TMDB API
+- **Hosting:** Vercel (optional)
+
+---
+
+## 🔧 Setup Instructions
+
+1. **Clone the repo**
+
+```bash
+git clone https://github.com/RohitRaj129/BingeIt.git
+cd BingeIt
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Add your TMDB API key
+
+Create a .env.local file:
+
+```bash
+TMDB_API_KEY="API_KEY"
+
+NEXT_PUBLIC_STACK_PROJECT_ID="project-id"
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY="client_key"
+STACK_SECRET_SERVER_KEY="server_key"
+```
+
+4. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🤝 Contributing
 
-## Learn More
+Pull requests are welcome. For major changes, please open an issue first to discuss what you’d like to change.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📬 Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Created by Rohit Raj\
+GitHub: @RohitRaj129\
+Email: rohitraj129848@gmail.com
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
