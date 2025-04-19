@@ -8,7 +8,6 @@ async function fetchTrailerFromTMDB(url: URL, cacheTime?: number) {
     const res = await fetch(url.toString(), {
       method: "GET",
       headers: TMDB_HEADERS,
-      cache: "no-store",
       next: {
         revalidate: cacheTime || 60 * 60 * 24, // Default: 24 hrs
       },

@@ -9,13 +9,16 @@ export default async function WatchPage({
   params,
   searchParams,
 }: WatchPageProps) {
-  const type = searchParams.type;
+  // Await params and searchParams before using them
+  const { id } = await params;
+  const { type } = await searchParams;
+
   let videoKey: string | null = null;
 
   if (type === "tv") {
-    videoKey = await getTvTrailer(params.id.toString());
+    videoKey = await getTvTrailer(id.toString());
   } else {
-    videoKey = await getMovieTrailer(params.id.toString());
+    videoKey = await getMovieTrailer(id.toString());
   }
 
   return (
