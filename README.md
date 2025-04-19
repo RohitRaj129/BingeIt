@@ -10,7 +10,6 @@ It allows users to explore trending content, view trailers, and browse by genres
 - 🔍 Search for movies and TV series
 - 🎞️ Watch trailers directly (supports both movies & TV)
 - 🧲 Browse by genre
-- 🇮🇳 Hindi movie support with native titles
 - 📱 Responsive design
 - ⚡ Fast, server-rendered pages using App Router (Next.js 13+)
 
