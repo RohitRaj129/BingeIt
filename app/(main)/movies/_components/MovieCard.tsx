@@ -2,7 +2,7 @@
 
 import getImagePath from "@/lib/getImagePath";
 import { Movie } from "@/typings";
-import ResponsiveImage from "./ui/ResponsiveImage";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);

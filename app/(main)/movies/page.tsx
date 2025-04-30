@@ -1,4 +1,4 @@
-import MoviesCarousal from "@/components/MoviesCarousal";
+import MoviesCarousal from "@/app/(main)/movies/_components/MoviesCarousal";
 import {
   getPopularIndianMovies,
   getTopRatedIndianMovies,
@@ -6,7 +6,7 @@ import {
   getIndianMoviesByGenre,
   getMoviesByGenre,
 } from "@/lib/getMovies";
-import MoviesCarouselBannerWrapper from "@/components/MoviesCarouselBannerWrapper";
+import MoviesCarouselBannerWrapper from "@/app/(main)/movies/_components/MoviesCarouselBannerWrapper";
 
 export default async function MoviesPage() {
   try {

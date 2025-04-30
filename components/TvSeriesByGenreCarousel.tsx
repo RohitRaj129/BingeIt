@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { TvSeries } from "@/typings";
-import TvSeriesCarousel from "./TvSeriesCarousel";
 import { fetchTvSeriesByGenreAction } from "@/lib/actions";
+import TvSeriesCarousel from "./TvSeriesCarousel";
 
 type Props = {
   tvSeries: TvSeries;

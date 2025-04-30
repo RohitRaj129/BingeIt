@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SearchBar from "@/components/SearchBar";
-import MoviesCarousal from "@/components/MoviesCarousal";
+import SearchBar from "@/app/(main)/search/_components/SearchBar";
+import MoviesCarousal from "@/app/(main)/movies/_components/MoviesCarousal";
 import { fetchPopularMoviesAction } from "@/lib/actions";
 import { Movie } from "@/typings";
 

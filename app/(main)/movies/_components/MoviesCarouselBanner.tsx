@@ -7,7 +7,7 @@ import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import MovieLogo from "@/lib/getMovieLogo";
 import { useState, useCallback } from "react";
-import MovieDetailsDrawer from "./MovieDetailsDrawer";
+import MovieDetailsDrawer from "../../../../components/MovieDetailsDrawer";
 
 Autoplay.globalOptions = { delay: 8000 };
 

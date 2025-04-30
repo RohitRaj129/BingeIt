@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "./ui/input";
+import { Input } from "../../../../components/ui/input";
 import { Search } from "lucide-react";
 
 const formSchema = z.object({

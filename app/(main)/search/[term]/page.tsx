@@ -1,8 +1,8 @@
-import MoviesCarousal from "@/components/MoviesCarousal";
+import MoviesCarousal from "@/app/(main)/movies/_components/MoviesCarousal";
 import { getPopularMovies, getSearchedMovies } from "@/lib/getMovies";
 import { searchTvSeries, getPopularTvSeries } from "@/lib/getTvSeries";
 import { notFound } from "next/navigation";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/app/(main)/search/_components/SearchBar";
 import TvSeriesCarousal from "@/components/TvSeriesCarousel";
 
 type Props = {

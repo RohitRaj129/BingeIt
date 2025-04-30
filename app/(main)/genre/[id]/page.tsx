@@ -1,4 +1,4 @@
-import MoviesCarousal from "@/components/MoviesCarousal";
+import MoviesCarousal from "@/app/(main)/movies/_components/MoviesCarousal";
 import { getDiscoverMovies } from "@/lib/getMovies";
 
 type Props = {

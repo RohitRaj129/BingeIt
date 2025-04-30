@@ -8,7 +8,7 @@ import { X, PlayIcon } from "lucide-react";
 import { getIndianMoviesByGenre } from "@/lib/getMovies";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
-import MoviesByGenreCarousel from "./MoviesByGenreCarousel";
+import MoviesByGenreCarousel from "@/app/(main)/movies/_components/MoviesByGenreCarousel";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

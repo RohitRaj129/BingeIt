@@ -1,6 +1,7 @@
-import CarouselBannerWrapper from "@/components/CarouselBannerWrapper";
+import MoviesCarousal from "@/app/(main)/movies/_components/MoviesCarousal";
+import CarouselBannerWrapper from "../../../components/CarouselBannerWrapper";
 // import Footer from "@/components/footer";
-import MoviesCarousal from "@/components/MoviesCarousal";
+
 import {
   getPopularMovies,
   getTopRatedMovies,
