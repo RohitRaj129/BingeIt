@@ -31,6 +31,24 @@ const links = [
       },
     ],
   },
+  {
+    group: "",
+    items: [
+      {
+        title: "FAQs",
+        href: "/faq",
+      },
+    ],
+  },
+  {
+    group: "",
+    items: [
+      {
+        title: "Contact us",
+        href: "/contact",
+      },
+    ],
+  },
 ];
 
 export default function FooterSection() {
@@ -43,6 +61,7 @@ export default function FooterSection() {
     "/search",
     "/categories",
     "/genre",
+    "/faq",
   ];
 
   if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
