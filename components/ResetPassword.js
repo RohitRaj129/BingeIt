@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -221,7 +221,7 @@ export default function ResetPassword() {
             <Link href="/" aria-label="go home">
               <div className="relative w-40 h-10">
                 <Image
-                  src="/Bingeit_logo.png"
+                  src="/logo.png"
                   alt="BingeIt Logo"
                   fill
                   className="object-contain"
