@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,9 +12,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Pricing() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const success = searchParams.get("success");
+    const plan = searchParams.get("plan");
+
+    if (success === "true" && plan) {
+      toast.success(`🎉 Congratulations! You’ve upgraded to ${plan} Plan!`);
+
+      // Step 1: Show toast for 2 seconds
+      setTimeout(() => {
+        // Step 2: Redirect to /home
+        router.push("/home");
+      }, 2000); // 2000ms = 2 seconds delay
+    }
+  }, [searchParams]);
 
   async function handlePlanSelect(planName: string) {
     const {

@@ -40,13 +40,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Plan not found" }, { status: 500 });
     }
 
-    const { error: updateError } = await supabase
-      .from("user_plans")
-      .update({
-        subscription_id: plan.id,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("user_id", userId);
+    // ✅ FIXED: Always include user_id inside upsert object (eq() doesn't work with upsert)
+    const { error: updateError } = await supabase.from("user_plans").upsert({
+      user_id: userId, // ✅ This ensures user_id is saved correctly
+      subscription_id: plan.id,
+      updated_at: new Date().toISOString(),
+    });
 
     if (updateError) {
       console.error("Update error:", updateError);
