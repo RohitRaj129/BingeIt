@@ -6,10 +6,11 @@ import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import { X, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import TvSeriesByGenreCarousel from "./TvSeriesByGenreCarousel";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 
 const TV_GENRE_MAP: { [id: number]: string } = {
   10759: "Action & Adventure",
@@ -56,6 +57,100 @@ export function TvSeriesDetailsDrawer({
   onClose,
 }: TvSeriesDetailsDrawerProps) {
   if (!tvSeries) return null;
+  const [planName, setPlanName] = useState<string>("");
+  const [planColor, setPlanColor] = useState<string>("");
+  const router = useRouter();
+  // Toast for showing messages
+  function showToast(message: string) {
+    if (typeof window !== "undefined" && (window as any).toast) {
+      (window as any).toast(message);
+    } else {
+      alert(message); // fallback
+    }
+  }
+
+  // Handles the logic for watching a movie based on plan and popularity
+  function handleWatch() {
+    if (!tvSeries) return;
+    // If Free plan and movie is popular, restrict access
+    if (
+      planName === "Free" &&
+      typeof tvSeries.popularity === "number" &&
+      tvSeries.popularity > 300
+    ) {
+      showToast("Upgrade your plan to watch trending tv series!");
+      router.push("/pricing");
+      return;
+    }
+    // If Super or Premium, allow watch
+    if (planName === "Super" || planName === "Premium") {
+      router.push(`/watch/${tvSeries.id}?type=tv`);
+      return;
+    }
+    // Default: allow watch for other cases
+    router.push(`/watch/${tvSeries.id}?type=tv`);
+  }
+
+  useEffect(() => {
+    // const subscriptionPlans: Record<string, { name: string; color: string }> = {
+    //   "51813d29-8a78-4203-97a6-0fd5e07f9795": { name: "Free", color: "" },
+    //   "af5d8190-117e-47be-8dc1-f8fbd8cc275e": {
+    //     name: "Super",
+    //     color: "text-blue-500",
+    //   },
+    //   "59823a4f-9f6b-494b-aa2b-336c78ed4e80": {
+    //     name: "Premium",
+    //     color: "text-red-500",
+    //   },
+    // };
+
+    const fetchSubscription = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        console.log("User ID:", user.id);
+        const { data, error } = await supabase
+          .from("user_plans")
+          .select("subscription_id")
+          .eq("user_id", user.id)
+          .single();
+
+        if (!data) {
+          console.warn("❗ No subscription found, defaulting to Free plan");
+          setPlanName("Free");
+          setPlanColor("");
+          return;
+        }
+
+        console.log("Subscription ID:", data.subscription_id);
+
+        const subscriptionPlans: Record<
+          string,
+          { name: string; color: string }
+        > = {
+          "51813d29-8a78-4203-97a6-0fd5e07f9795": { name: "Free", color: "" },
+          "af5d8190-117e-47be-8dc1-f8fbd8cc275e": {
+            name: "Super",
+            color: "text-blue-500",
+          },
+          "59823a4f-9f6b-494b-aa2b-336c78ed4e80": {
+            name: "Premium",
+            color: "text-red-500",
+          },
+        };
+
+        const plan = subscriptionPlans[data.subscription_id] || {
+          name: "Free",
+          color: "",
+        };
+        setPlanName(plan.name);
+        setPlanColor(plan.color);
+        console.log("✅ Plan Name:", plan.name);
+      }
+    };
+    fetchSubscription();
+  }, []);
 
   const imageUrl = useMemo(() => {
     return getImagePath(
@@ -140,7 +235,10 @@ export function TvSeriesDetailsDrawer({
                     href={`/watch/${tvSeries.id}?type=tv`}
                     className="group w-full sm:w-auto"
                   >
-                    <button className="w-full sm:w-auto bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 hover:from-purple-800 hover:via-indigo-700 hover:to-blue-600 px-4 sm:px-5 py-2 text-white text-sm sm:text-base font-semibold rounded-md flex items-center justify-center transition-all duration-500 bg-[length:200%_200%] hover:bg-[position:100%_0%]">
+                    <button
+                      className="w-full sm:w-auto bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-500 hover:from-purple-800 hover:via-indigo-700 hover:to-blue-600 px-4 sm:px-5 py-2 text-white text-sm sm:text-base font-semibold rounded-md flex items-center justify-center transition-all duration-500 bg-[length:200%_200%] hover:bg-[position:100%_0%]"
+                      onClick={handleWatch}
+                    >
                       <span className="flex items-center gap-2 transition-transform duration-300 group-hover:scale-105 cursor-pointer">
                         <PlayIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                         Watch

@@ -7,7 +7,7 @@ import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import MovieLogo from "@/lib/getMovieLogo";
 import { useState, useCallback } from "react";
-import MovieDetailsDrawer from "./MovieDetailsDrawer";
+import MovieDrawerWrapper from "./MovieDrawerWrapper";
 
 Autoplay.globalOptions = { delay: 8000 };
 
@@ -20,12 +20,12 @@ function formatDate(dateString: string) {
   });
 }
 
-function isMovieReleased(releaseDate: string): boolean {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const release = new Date(releaseDate);
-  return release < today;
-}
+// function isMovieReleased(releaseDate: string): boolean {
+//   const today = new Date();
+//   today.setHours(0, 0, 0, 0);
+//   const release = new Date(releaseDate);
+//   return release < today;
+// }
 
 function CarouselBanner({ movies }: { movies: Movie[] }) {
   const [emblaRef] = useEmblaCarousel({ loop: true, duration: 100 }, [
@@ -34,12 +34,9 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const releasedMovies = movies
-    .filter((movie) => isMovieReleased(movie.release_date))
-    .sort(
-      (a, b) =>
-        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
-    );
+  const topRatedMovies = movies
+    .sort((a, b) => b.vote_average - a.vote_average)
+    .slice(0, 10); // Top 10 rated movies
 
   const handleMovieClick = useCallback((movie: Movie) => {
     setSelectedMovie(movie);
@@ -50,13 +47,13 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
     setIsDrawerOpen(false);
   }, []);
 
-  if (releasedMovies.length === 0) return null;
+  if (topRatedMovies.length === 0) return null;
 
   return (
     <>
       <div className="overflow-hidden relative" ref={emblaRef}>
         <div className="flex">
-          {releasedMovies.map((movie) => (
+          {topRatedMovies.map((movie) => (
             <div
               key={movie.id}
               className="flex-full min-w-0 relative cursor-pointer"
@@ -133,7 +130,7 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#0C0E1A] pointer-events-none" />
       </div>
 
-      <MovieDetailsDrawer
+      <MovieDrawerWrapper
         movie={selectedMovie}
         isOpen={isDrawerOpen}
         onClose={handleCloseDrawer}

@@ -68,18 +68,38 @@ function Header() {
           .select("subscription_id")
           .eq("user_id", user.id)
           .single();
-        if (error) {
-          console.error("Error fetching subscription:", error);
-        } else {
-          console.log("Subscription ID:", data?.subscription_id);
-          const plan = subscriptionPlans[data?.subscription_id || ""] || {
-            name: "Unknown Plan",
-            color: "",
-          };
-          setPlanName(plan.name);
-          setPlanColor(plan.color);
-          console.log("Plan Name:", plan.name);
+
+        if (!data) {
+          console.warn("❗ No subscription found, defaulting to Free plan");
+          setPlanName("Free");
+          setPlanColor("");
+          return;
         }
+
+        console.log("Subscription ID:", data.subscription_id);
+
+        const subscriptionPlans: Record<
+          string,
+          { name: string; color: string }
+        > = {
+          "51813d29-8a78-4203-97a6-0fd5e07f9795": { name: "Free", color: "" },
+          "af5d8190-117e-47be-8dc1-f8fbd8cc275e": {
+            name: "Super",
+            color: "text-blue-500",
+          },
+          "59823a4f-9f6b-494b-aa2b-336c78ed4e80": {
+            name: "Premium",
+            color: "text-red-500",
+          },
+        };
+
+        const plan = subscriptionPlans[data.subscription_id] || {
+          name: "Free",
+          color: "",
+        };
+        setPlanName(plan.name);
+        setPlanColor(plan.color);
+        console.log("✅ Plan Name:", plan.name);
       }
     };
     fetchSubscription();

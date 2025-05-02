@@ -4,7 +4,7 @@ import { Movie } from "@/typings";
 import MovieCard from "./MovieCard";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import MovieDetailsDrawer from "../../../../components/MovieDetailsDrawer";
+import MovieDrawerWrapper from "@/components/MovieDrawerWrapper";
 
 type Props = {
   title: string;
@@ -62,7 +62,7 @@ function MoviesCarousal({ title, movies, isVertical }: Props) {
 
       {/* Single shared drawer */}
       {selectedMovie && (
-        <MovieDetailsDrawer
+        <MovieDrawerWrapper
           movie={selectedMovie}
           isOpen={!!selectedMovie}
           onClose={handleCloseDrawer}

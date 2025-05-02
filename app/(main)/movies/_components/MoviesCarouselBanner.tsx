@@ -7,7 +7,7 @@ import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import MovieLogo from "@/lib/getMovieLogo";
 import { useState, useCallback } from "react";
-import MovieDetailsDrawer from "../../../../components/MovieDetailsDrawer";
+import MovieDrawerWrapper from "@/components/MovieDrawerWrapper";
 
 Autoplay.globalOptions = { delay: 8000 };
 
@@ -130,7 +130,7 @@ function MoviesCarouselBanner({ movies }: { movies: Movie[] }) {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#0C0E1A] pointer-events-none" />
       </div>
 
-      <MovieDetailsDrawer
+      <MovieDrawerWrapper
         movie={selectedMovie}
         isOpen={isDrawerOpen}
         onClose={handleCloseDrawer}
