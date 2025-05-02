@@ -4,7 +4,7 @@ import { Movie } from "@/typings";
 import MovieCard from "../app/(main)/movies/_components/MovieCard";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import MovieDetailsDrawer from "../../../../components/MovieDetailsDrawer";
+import MovieDetailsDrawer from "@/components/MovieDetailsDrawer";
 
 type Props = {
   title: string;

@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <main>
       <CarouselBannerWrapper />
-      <div className="flex flex-col space-y-2 -mt-5 sm:mt-40">
+      <div className="flex flex-col space-y-2 -mt-5 sm:-mt-12">
         {/* Popular Movies */}
         <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 pl-4 sm:pl-10 z-10">
           Popular Movies

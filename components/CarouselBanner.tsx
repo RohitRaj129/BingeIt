@@ -34,12 +34,9 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const releasedMovies = movies
-    .filter((movie) => isMovieReleased(movie.release_date))
-    .sort(
-      (a, b) =>
-        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
-    );
+  const topRatedMovies = movies
+    .sort((a, b) => b.vote_average - a.vote_average)
+    .slice(0, 10); // Top 10 rated movies
 
   const handleMovieClick = useCallback((movie: Movie) => {
     setSelectedMovie(movie);
@@ -50,13 +47,13 @@ function CarouselBanner({ movies }: { movies: Movie[] }) {
     setIsDrawerOpen(false);
   }, []);
 
-  if (releasedMovies.length === 0) return null;
+  if (topRatedMovies.length === 0) return null;
 
   return (
     <>
       <div className="overflow-hidden relative" ref={emblaRef}>
         <div className="flex">
-          {releasedMovies.map((movie) => (
+          {topRatedMovies.map((movie) => (
             <div
               key={movie.id}
               className="flex-full min-w-0 relative cursor-pointer"
