@@ -12,5 +12,8 @@ export default function MovieDrawerWrapper({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  // Add a null check to prevent errors when movie is null
+  if (!movie) return null;
+  
   return <MovieDetailsDrawer movie={movie} isOpen={isOpen} onClose={onClose} />;
 }

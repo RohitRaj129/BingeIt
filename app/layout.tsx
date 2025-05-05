@@ -3,11 +3,11 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProviders";
 import { GlobalDrawerProvider } from "@/contexts/GlobalDrawerContext";
 import GlobalDrawer from "@/components/GlobalDrawer";
-import FooterSection from "@/components/Footer";
+// import FooterSection from "@/components/Footer";
 import { ProfileProvider } from "@/contexts/ProfileContext";
 
 const poppins = Poppins({
