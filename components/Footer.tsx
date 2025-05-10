@@ -51,7 +51,7 @@ const links = [
   },
 ];
 
-export default function FooterSection() {
+export default function Footer() {
   const pathname = usePathname();
 
   const hiddenPaths = [
@@ -61,7 +61,7 @@ export default function FooterSection() {
     "/search",
     "/categories",
     "/genre",
-    "/faq",
+    "/profiles",
   ];
 
   if (hiddenPaths.some((path) => pathname.startsWith(path))) return null;
@@ -70,7 +70,7 @@ export default function FooterSection() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 md:grid-cols-5">
           <div className="md:col-span-2">
-            <Link href="/" aria-label="go home" className="block size-fit">
+            <Link href="/home" aria-label="go home" className="block size-fit">
               <Image
                 src="/logo.png"
                 alt="BingeIt"
