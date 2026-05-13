@@ -217,7 +217,7 @@ export function MovieDetailsDrawer({
                   </span>
                 </div>
 
-                <p className="mt-2 text-gray-300 text-xs sm:text-sm line-clamp-3 sm:line-clamp-2">
+                <p className="mt-2 text-gray-300 text-xs sm:text-sm line-clamp-4 sm:line-clamp-3 whitespace-normal">
                   {movie.overview}
                 </p>
 

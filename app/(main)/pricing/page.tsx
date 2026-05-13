@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/ui/button";
@@ -14,24 +14,43 @@ import {
 import { Check } from "lucide-react";
 import { toast } from "sonner";
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 export default function Pricing() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const razorpayLoaded = useRef(false);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => {
+      razorpayLoaded.current = true;
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   useEffect(() => {
     const success = searchParams.get("success");
     const plan = searchParams.get("plan");
 
     if (success === "true" && plan) {
-      toast.success(`🎉 Congratulations! You’ve upgraded to ${plan} Plan!`);
+      toast.success(`🎉 Congratulations! You've upgraded to ${plan} Plan!`);
 
-      // Step 1: Show toast for 2 seconds
       setTimeout(() => {
-        // Step 2: Redirect to /home
         router.push("/home");
-      }, 2000); // 2000ms = 2 seconds delay
+      }, 2000);
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   async function handlePlanSelect(planName: string) {
     const {
@@ -64,13 +83,46 @@ export default function Pricing() {
         });
 
         const data = await response.json();
-        console.log("Checkout Session Response:", data); // 👈 log the full response
+        console.log("Checkout Response:", data);
 
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          console.error("No URL returned from checkout session");
+        if (!response.ok) {
+          console.error("API error:", data.error);
+          toast.error(data.error || "Failed to create order");
+          return;
         }
+
+        if (!window.Razorpay) {
+          toast.error("Razorpay not loaded. Please refresh and try again.");
+          return;
+        }
+
+        const razorpay = new window.Razorpay({
+          key: data.keyId,
+          order_id: data.orderId,
+          handler: async function (response: any) {
+            console.log("Payment success:", response);
+
+            const confirmRes = await fetch("/api/confirm-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                plan: planName,
+                userId: user.id,
+                paymentId: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id,
+              }),
+            });
+
+            if (confirmRes.ok) {
+              toast.success(`🎉 Congratulations! You've upgraded to ${planName} Plan!`);
+              setTimeout(() => {
+                router.push("/home");
+              }, 2000);
+            }
+          },
+        });
+
+        razorpay.open();
       } catch (error) {
         console.error("Error creating checkout session:", error);
       }
